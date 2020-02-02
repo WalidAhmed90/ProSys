@@ -11,10 +11,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">User</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['user_id']; ?></a>
         </div>
       </div>
 
@@ -32,6 +32,13 @@
               </p>
             </a>
           </li>
+          <!--
+            ******************Student******************
+            *********************************************
+          -->
+          <?php
+          if ($_SESSION["type"] == "Student") {
+            ?>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
@@ -42,25 +49,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="initiateGroup.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Initiate Group</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="joinGroup.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Join Group</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="ChooseSupervisor.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Choose Supervisor</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="groupSettings.php" class="nav-link">
                   <i class="fa ffa fa-cog nav-icon"></i>
                   <p>Settings</p>
                 </a>
@@ -77,14 +84,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="setProjectName.php" class="nav-link">
                   <i class="far fa-edit nav-icon"></i>
                   
                   <p>Set Project Name</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="projectTemplates.php" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Project Templates</p>
                 </a>
@@ -92,19 +99,19 @@
             </ul>
           </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="studentTask.php" class="nav-link">
                     <i class="far fa fa-tasks nav-icon"></i>
                     <p>Tasks</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="groupDetails.php" class="nav-link">
                     <i class="far fa fa-users nav-icon"></i>
                     <p>Group Details</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="meetingLogs.php" class="nav-link">
                     <i class="far fa fa-list-ul nav-icon"></i>
                     <p>Meeting Logs</p>
                   </a>
@@ -115,7 +122,20 @@
                     <p>Deliverables</p>
                   </a>
                 </li>
-            
+            <?php  } 
+
+            elseif($_SESSION["type"] == "Faculty"){
+              $userID = $_SESSION['user_id'];
+              $sql = "SELECT * FROM faculty WHERE facultyRid = '".$userID."' ";
+              $run = mysqli_query($link,$sql);
+              if(mysqli_num_rows($run)>0){
+                    while($row = mysqli_fetch_array($run)){
+                      $is_coor = $row['isCoordinator'];
+                    }
+
+                    if($is_coor == 1){
+
+             ?>
 
             <!-- Coordinator SideBar -->
           <li class="nav-item has-treeview">
@@ -241,7 +261,7 @@
                     <p>Project Repository</p>
                   </a>
                 </li>
-
+              <?php } else{ ?>
                 <!-- Supervisor -->
                 <li class="nav-item">
                   <a href="./index.html" class="nav-link">
@@ -273,6 +293,8 @@
                     <p>Share Ideas</p>
                   </a>
                 </li>
+                <?php } }
+            } ?>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

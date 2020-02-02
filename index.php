@@ -1,7 +1,13 @@
 <?php 
+session_start();
 $title = "ProSys";
 $subtitle = "Dashboard";
- ?>
+include('db/db_connect.php');
+if(!isset($_SESSION['user_id'])){
+  header("location: login.php");
+  }
+  else{
+?>
 <head>
   <?php include('include/head.php'); ?>
 </head>
@@ -36,3 +42,4 @@ $subtitle = "Dashboard";
 
   </body>
 </html>
+<?php } ?>

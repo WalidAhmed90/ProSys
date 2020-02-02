@@ -1,0 +1,73 @@
+<?php 
+$title = "ProSys";
+$subtitle = "Project Templates";
+ ?>
+<head>
+  <?php include('include/head.php'); ?>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <?php include('include/navbar.php'); ?>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <?php include ('include/sidebar.php'); ?>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <?php include ('include/contentheader.php'); ?>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fa fa-file" aria-hidden="true"></i>
+                Files of batch - <?php echo "batch"; ?></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-hover">
+                  <tr>
+                    <h4>
+                      <i class=""></i>
+                      <a href=""><?php echo "upload"; ?></a>
+                    </h4>
+                  </tr>
+                </table>
+              </div>
+              
+            </div>
+            <!-- /.card -->
+            </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+
+          </div>
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <?php include('include/footer.php'); ?>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<?php include ('include/jsFile.php'); ?>
+</body>
+</html>
