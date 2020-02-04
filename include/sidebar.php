@@ -49,9 +49,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="initiateGroup.php" class="nav-link">
+                <a href="CreateProject.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Initiate Group</p>
+                  <p>Create Project</p>
                 </a>
               </li>
               <li class="nav-item">

@@ -1,6 +1,7 @@
 <?php 
 $title = "ProSys";
 $subtitle = "Set Project Name";
+session_start();
  ?>
 <head>
   <?php include('include/head.php'); ?>

@@ -1,6 +1,7 @@
 <?php 
 $title = "ProSys";
 $subtitle = "Group Settings";
+session_start();
  ?>
 <head>
   <?php include('include/head.php'); ?>
