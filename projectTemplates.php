@@ -2,6 +2,11 @@
 $title = "ProSys";
 $subtitle = "Project Templates";
 session_start();
+if(!isset($_SESSION['user_id'])){
+  header("location: login.php");
+  }
+  else{
+
  ?>
 <head>
   <?php include('include/head.php'); ?>
