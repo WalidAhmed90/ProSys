@@ -30,8 +30,18 @@
   <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- daterange picker -->
-  <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
   <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+  <link rel="stylesheet" href="plugins/jquery-ui/jquery-ui.css">
+ <script src="plugins/jquery-ui/jquery-ui.min.css"></script>
+ <script src="plugins/jquery-ui/jquery-ui.structure.css"></script>
+ <script src="plugins/jquery-ui/jquery-ui.structure.min.css"></script> 
+ <script src="plugins/jquery-ui/jquery-ui.theme.css"></script>
+ <script src="plugins/jquery-ui/jquery-ui.theme.min.css"></script>

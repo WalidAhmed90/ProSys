@@ -1,12 +1,11 @@
 <?php 
 $title = "ProSys";
 $subtitle = "Set Project Name";
+include('db/db_connect.php');
 session_start();
 if(!isset($_SESSION['user_id'])){
   header("location: login.php");
   }
-  else{
-
  ?>
 <head>
   <?php include('include/head.php'); ?>

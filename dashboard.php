@@ -26,6 +26,7 @@ if(!isset($_SESSION['user_id'])){
       <?php include ('include/contentheader.php'); ?>
       <!-- .Content Header (Page header) -->
 
+
     </div>
     <!-- .Content Wrapper. Contains page content -->
 
@@ -37,6 +38,8 @@ if(!isset($_SESSION['user_id'])){
   <!-- jQuery -->
   <?php include('include/jsFile.php'); ?>
   <!-- .jQuery -->
+
+ 
 
   </body>
 </html>

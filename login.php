@@ -2,8 +2,11 @@
 $title = "ProSys";
 $subtitle = "Login";
 session_start();
-
 include('db/db_connect.php');
+
+if(isset($_SESSION['user_id'])){
+  header("location: index.php");
+  }
 
 if(isset($_POST['submit'])){
 
@@ -16,14 +19,18 @@ if(isset($_POST['submit'])){
     $run_std = mysqli_query($link,$login_query_std);
     $run_fac = mysqli_query($link,$login_query_fac);
 
+    $row  = mysqli_fetch_array($run_std);
+    $row1  = mysqli_fetch_array($run_fac);
     if(mysqli_num_rows($run_std)>0){
         $_SESSION['user_id'] = $login_id;
         $_SESSION['type'] = "Student";
+        $_SESSION["usrnm"]=$row["studentName"];
         echo "<script>window.open('index.php','_self')</script>";
     }
     elseif(mysqli_num_rows($run_fac)>0){
         $_SESSION['user_id'] = $login_id;
         $_SESSION['type'] = "Faculty";
+        $_SESSION["usrnm"]=$row1["facultyName"];
         echo "<script>window.open('index.php','_self')</script>";
     }
   else{
@@ -91,6 +98,6 @@ if(isset($_POST['submit'])){
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<<?php include('include/jsFile.php'); ?>
+<?php include('include/jsFile.php'); ?>
 </body>
 </html>

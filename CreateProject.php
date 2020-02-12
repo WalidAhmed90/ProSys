@@ -1,6 +1,7 @@
 <?php 
 $title = "ProSys";
 $subtitle = "Create Project";
+include('db/db_connect.php');
 session_start();
 if(!isset($_SESSION['user_id'])){
   header("location: login.php");
