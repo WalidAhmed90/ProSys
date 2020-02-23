@@ -33,9 +33,9 @@ function time2str($ts) {
         $ts = strtotime($ts);
 
     $diff = time() - $ts;
-    if ($diff == 0)
+    if ($diff == 0){
         return 'now';
-    elseif ($diff > 0) {
+    }elseif ($diff > 0) {
         $day_diff = floor($diff / 86400);
         if ($day_diff == 0) {
             if ($diff < 60)
@@ -87,7 +87,30 @@ function time2str($ts) {
 }
 
 
+function getStudentData($id) {
+    global $conn;
 
+    // build the query
+    $sql = "SELECT * from student WHERE student.studentId = '$id' LIMIT 1";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            $studentData = array(
+                "rid"=>$row['studentRid'],
+                "name"=>$row['studentName'],
+                "email"=>$row['studentEmail'],
+                "gender"=>$row['studentGender'],
+            );
+
+            return $studentData;
+
+        }
+    } else {
+       return false;
+    }
+
+}
 
 
 //Function to generate random password
@@ -136,3 +159,19 @@ function get_icon($filename){
 
 
 }
+
+function check_group_uploads ($groupId,$taskId,$batchId){
+    global $conn;
+
+    $sql = "SELECT * FROM batch_tasks JOIN group_uploads ON batch_tasks.taskId = group_uploads.taskId WHERE groupId = '$groupId' AND batchId = '$batchId' AND batch_tasks.taskId = '$taskId' LIMIT 1 ";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+

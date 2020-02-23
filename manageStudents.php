@@ -252,7 +252,7 @@ if(!isset($_SESSION['user_id'])){
                     }?>
 
 
-                    <div class="card no-border">
+                    <div class="card no-border ">
                         <div class="card-header">
                             <h3 class="card-title">List of students</h3>
 
@@ -290,7 +290,7 @@ if(!isset($_SESSION['user_id'])){
                             $batchId = filter_input(INPUT_GET,'batchId',FILTER_SANITIZE_NUMBER_INT);
                             ?>
                             <!-- /.card-header -->
-                            <div class="card-body table-responsive p-0">
+                            <div class="card-body table-responsive ">
                                 <table id="manageStudents" class="table table-head-fixed text-nowrap">
                                     <thead>
                                     <tr>
@@ -347,7 +347,7 @@ if(!isset($_SESSION['user_id'])){
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <a href="./registerStudents.php" class="btn btn-primary btn-sm float-right">Add New Student</a>
+                                <a href="registerStudent.php" class="btn btn-primary btn-sm float-right">Add New Student</a>
                                 <a href="<?php echo siteroot; ?>" class="btn  btn-default btn-sm  "> Back</a>
 
                             </div>

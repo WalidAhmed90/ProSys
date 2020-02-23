@@ -1,6 +1,10 @@
 <?php 
 $title = "ProSys";
 $subtitle = "Dashboard";
+session_start();
+if(!isset($_SESSION['user_id'])){
+  header("location: login.php");
+  }
  ?>
 <head>
   <?php include('include/head.php'); ?>
@@ -22,6 +26,7 @@ $subtitle = "Dashboard";
       <?php include ('include/contentheader.php'); ?>
       <!-- .Content Header (Page header) -->
 
+
     </div>
     <!-- .Content Wrapper. Contains page content -->
 
@@ -33,6 +38,8 @@ $subtitle = "Dashboard";
   <!-- jQuery -->
   <?php include('include/jsFile.php'); ?>
   <!-- .jQuery -->
+
+ 
 
   </body>
 </html>

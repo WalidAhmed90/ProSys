@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">ProSys</span>
@@ -8,13 +8,15 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+      <!-- Sidebar user panel -->
+      <div class="user-panel mt-3 mb-3 d-flex " >
+        <div class="mb-2">
+          <img src="dist/img/pics/pic2.jpg" style="width: 57px" class="img-circle elevation-2 "  alt="User Image">
         </div>
-        <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['user_id']; ?></a>
+        <div class="info d-flex justify-content-center mt-1">
+         <a href="profile.php"><p class="text-wrap text-left text-light text-bold"><?php
+                    echo $_SESSION["usrnm"];
+          ?></p></a>
         </div>
       </div>
 
@@ -24,7 +26,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+            <a href="index.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -37,8 +39,18 @@
             *********************************************
           -->
           <?php
-          if ($_SESSION["type"] == "Student") {
-            ?>
+            if ($_SESSION["type"] === "Student") {
+                $studId = $_SESSION["user_id"];
+                $sql = "SELECT * FROM student WHERE studentRid= '$studId' LIMIT 1";
+               $result = mysqli_query($link,$sql);
+                 if (mysqli_num_rows($result)>0) {
+                    // output data of each row
+                    while($row = mysqli_fetch_array($result)) {
+                        $isLeader = $row['isLeader'];
+                        $groupId  = $row['groupId'];
+                    }
+                }
+                ?>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
@@ -48,10 +60,13 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <?php
+                if ($isLeader != 1 &&  is_null($groupId)) {
+                            ?>
               <li class="nav-item">
-                <a href="initiateGroup.php" class="nav-link">
+                <a href="CreateProject.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Initiate Group</p>
+                  <p>Create Project</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -60,6 +75,12 @@
                   <p>Join Group</p>
                 </a>
               </li>
+              <?php
+                        } ?>
+
+              <?php
+              if ($isLeader == 1) {
+              ?>          
               <li class="nav-item">
                 <a href="ChooseSupervisor.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -72,8 +93,13 @@
                   <p>Settings</p>
                 </a>
               </li>
+              <?php
+               } ?>
             </ul>
           </li>
+          <?php
+                if ( !is_null($groupId)) {
+           ?>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa fa-list-alt"></i>
@@ -122,6 +148,8 @@
                     <p>Deliverables</p>
                   </a>
                 </li>
+                <?php
+                } ?>
             <?php  } 
 
             elseif($_SESSION["type"] == "Faculty"){
@@ -148,25 +176,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="createBatch.php" class="nav-link">
                   <i class="far fa fa-plus nav-icon"></i>
                   <p>Create Batch</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="batchTemplates.php" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Batch</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="batchTask.php" class="nav-link">
                   <i class="far fa fa-tasks nav-icon"></i>
                   <p>Batch Task</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="batchSettings.php" class="nav-link">
                   <i class="fa ffa fa-cog nav-icon"></i>
                   <p>Settings</p>
                 </a>
@@ -183,21 +211,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="registerStudent.php" class="nav-link">
                   <i class="far fa fa-plus nav-icon"></i>
                   <p>Student</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="registerFaculty.php" class="nav-link">
                   <i class="far fa fa-plus nav-icon"></i>
                   <p>Faculty</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
-                  <i class="far fa fa-plus nav-icon"></i>
-                  <p>Coordinator</p>
                 </a>
               </li>
             </ul>
@@ -212,25 +234,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="manageBatch.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Batch</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="manageStudents.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Students</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="manageStudentGroups.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Student Group</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="manageFaculty.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Faculty</p>
                 </a>
@@ -243,12 +265,6 @@
               </li>
             </ul>
           </li>
-                <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
-                    <i class="far fa fa-envelope nav-icon"></i>
-                    <p>Send E-mail</p>
-                  </a>
-                </li>
                 <li class="nav-item">
                   <a href="./index.html" class="nav-link">
                     <i class="far fa fa-file-pdf nav-icon"></i>
@@ -281,12 +297,7 @@
                     <p>Grading</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
-                    <i class="far fa fa-envelope nav-icon"></i>
-                    <p>Send E-mail</p>
-                  </a>
-                </li>
+              
                 <li class="nav-item">
                   <a href="./index.html" class="nav-link">
                     <i class="far fa fa-lightbulb nav-icon"></i>
@@ -295,8 +306,41 @@
                 </li>
                 <?php } }
             } ?>
+
+           <!--  Send Email -->
+              <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
+              <p>
+                Send Email
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="compose.php" class="nav-link">
+                  <i class="fa fa-paper-plane nav-icon"></i>
+                  <p>Compose Email</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="mailbox.php" class="nav-link">
+                  <i class="fas fa-inbox nav-icon"></i>
+                  <p>Inbox</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="sentmail.php" class="nav-link">
+                 <i class="far fa-paper-plane nav-icon"></i>
+                  <p>Sent mail</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
         </ul>
       </nav>
+
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

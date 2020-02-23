@@ -1,6 +1,10 @@
 <?php 
 $title = "ProSys";
 $subtitle = "Choose Supervisor";
+session_start();
+if(!isset($_SESSION['user_id'])){
+  header("location: login.php");
+  }
  ?>
 <head>
   <?php include('include/head.php'); ?>

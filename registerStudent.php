@@ -11,7 +11,7 @@ if(!isset($_SESSION['user_id'])){
 <head>
   <?php include('include/head.php'); ?>
   <style type="text/css">
-  	.ui-dialog-titlebar-close {visibility: hidden; }
+    .ui-dialog-titlebar-close {visibility: hidden; }
   </style>
 
 </head>
@@ -48,6 +48,7 @@ if(!isset($_SESSION['user_id'])){
                 <h3 class="card-title">Register Student</h3>
               </div>
               <!-- /.card-header -->
+
               <!-- form start -->
       <form method="post" id="user_form">
         <div class="table-responsive">
@@ -59,6 +60,24 @@ if(!isset($_SESSION['user_id'])){
               <th>Batch</th>
               <th>Details</th>
               <th>Remove</th>
+            </tr>
+            <tr>
+              <?php
+              $i = 1;
+              $sqlGet = "SELECT * FROM batch WHERE batchid='".."' ORDER BY createdDtm DESC";
+               $result = mysqli_query($link,$sqlGet);
+                 if (mysqli_num_rows($result)>0) {
+          while($row = mysqli_fetch_assoc($result)) { ?>
+            <td>$i++</td>
+            <td><?php echo $row['studentName']; ?></td>
+            <td><?php echo $row['studentRid']; ?></td>
+            <td><?php echo $row['batchid']; ?></td>
+            <td></td>
+            <td></td>
+            <?php
+              }
+                 }
+               ?>
             </tr>
           </table>
         </div>
@@ -76,6 +95,7 @@ if(!isset($_SESSION['user_id'])){
     </div>
     <div id="user_dialog" title="Add Data" >
       <div class="form-group">
+        <form method="post" id="User_reg_form">
         <label>Enter Student Full Name</label>
         <input type="text" name="full_name" id="full_name" class="form-control" />
         <span id="error_full_name" class="text-danger"></span>
@@ -86,7 +106,7 @@ if(!isset($_SESSION['user_id'])){
         <span id="error_reg_id" class="text-danger"></span>
       </div>
        <div class="form-group has-feedback">
-       	<label>Select Batch</label>
+        <label>Select Batch</label>
                 <select type="text" name="batch" id="batch" class="form-control" required>
                <span id="error_batch" class="text-danger"></span>
                   <?php
@@ -102,20 +122,20 @@ if(!isset($_SESSION['user_id'])){
              </div>
       <div class="form-group">
         <input type="hidden" name="row_id" id="hidden_row_id" />
-        <button type="button" name="save" id="save" class="btn btn-info float-right">Save</button>
+        <input type="submit" name="save" value="Save" id="save" class="btn btn-info float-right">
         <input type="hidden" name="close" id="hidden_close" />
         <button type="button" name="close" id="close" class="btn btn-danger float-left">close</button>
-
+</form>
       </div>
     </div>
     <div id="action_alert1" title="Action" align="center">
-    	<p >Data added successfully. </p>
-    	<button type="button" name="close1" id="close1" class="btn btn-danger">Close</button>
-  	</div>
+      <p >Data added successfully. </p>
+      <button type="button" name="close1" id="close1" class="btn btn-danger">Close</button>
+    </div>
     <div id="action_alert2" title="Action" align="center">
-    	<p >Please Add at least one data.</p>
-    	<button type="button" name="close2" id="close2" class="btn btn-danger">Close</button>
-  	</div>
+      <p >Please Add at least one data.</p>
+      <button type="button" name="close2" id="close2" class="btn btn-danger">Close</button>
+    </div>
 
 </div>
    <!-- ./ Main Register Form -->
@@ -179,13 +199,13 @@ $(document).ready(function(){
     $('#user_dialog').dialog('open');
   });
   $('#close').click(function(){
-  	$('#user_dialog').dialog('close');
+    $('#user_dialog').dialog('close');
   });
   $('#close1').click(function(){
-  	$('#action_alert1').dialog('close');
+    $('#action_alert1').dialog('close');
   });
   $('#close2').click(function(){
-  	$('#action_alert2').dialog('close');
+    $('#action_alert2').dialog('close');
   });
 
 
@@ -246,7 +266,7 @@ $(document).ready(function(){
     }
     else
     {
-      if($('#save').text() == 'Save')
+      if($('#save').val() == 'Save')
       {
         count = count + 1;
         output = '<tr id="row_'+count+'">';
@@ -258,6 +278,7 @@ $(document).ready(function(){
         output += '<td><button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Remove</button></td>';
         output += '</tr>';
         $('#user_data').append(output);
+        
       }
       else
       {
@@ -337,7 +358,30 @@ $(document).ready(function(){
 
     }
   });
+  $('#save').on('submit', function(){
   
+    var full_name = $('#full_name').val();
+    var reg_id = $('#reg_id').val();
+    var batch = $('#batch').val();
+    $.ajax({
+      url: "test_form.php",
+      type: "POST",
+      data:{
+        full_name: full_name,
+        reg_id: reg_id,
+        batch: batch
+      },
+      success:function(data)
+        {
+          var data = JSON.parse(data);
+          if(data.statusCode==200)
+          {
+           
+          $('#action_alert1').dialog('open');
+          }
+        }
+    })
+  });
 });  
 </script>
 

@@ -514,6 +514,7 @@ button.ui-button::-moz-focus-inner {
 	margin: -10px 0 0 0;
 	padding: 1px;
 	height: 20px;
+	background-image:url("https://img.icons8.com/metro/26/000000/close-window.png") ;
 }
 .ui-dialog .ui-dialog-content {
 	position: relative;
@@ -531,10 +532,12 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
 	float: right;
+
 }
 .ui-dialog .ui-dialog-buttonpane button {
 	margin: .5em .4em .5em 0;
 	cursor: pointer;
+	background-color: red;
 }
 .ui-dialog .ui-resizable-n {
 	height: 2px;

@@ -2,8 +2,11 @@
 $title = "ProSys";
 $subtitle = "Login";
 session_start();
-
 include('db/db_connect.php');
+
+if(isset($_SESSION['user_id'])){
+  header("location: login.php");
+  }
 
 if(isset($_POST['submit'])){
 
@@ -16,14 +19,28 @@ if(isset($_POST['submit'])){
     $run_std = mysqli_query($link,$login_query_std);
     $run_fac = mysqli_query($link,$login_query_fac);
 
+    $row  = mysqli_fetch_array($run_std);
+    $row1  = mysqli_fetch_array($run_fac);
     if(mysqli_num_rows($run_std)>0){
         $_SESSION['user_id'] = $login_id;
         $_SESSION['type'] = "Student";
+        $_SESSION["usrnm"]=$row["studentName"];
+        $_SESSION["usrId"]=$row["studentId"];
+        $_SESSION["batchId"]=$row["batchId"];
+        $_SESSION["usremail"]=$row["studentEmail"];
+        $_SESSION["usrcell"]=$row["studentPhoneNo"];
+        $_SESSION["usrgender"]=$row["studentGender"];
+
         echo "<script>window.open('index.php','_self')</script>";
     }
     elseif(mysqli_num_rows($run_fac)>0){
         $_SESSION['user_id'] = $login_id;
         $_SESSION['type'] = "Faculty";
+        $_SESSION["usrnm"]=$row1["facultyName"];
+        $_SESSION["usrId"]=$row1["facultyId"];
+        $_SESSION["usremail"]=$row1["facultyEmail"];
+        $_SESSION["usrcell"]=$row1["facultyPhoneNo"];
+        $_SESSION["designation"]=$row1["designation"];
         echo "<script>window.open('index.php','_self')</script>";
     }
   else{
@@ -37,7 +54,28 @@ if(isset($_POST['submit'])){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <?php include('include/head.php'); ?>
 </head>
-<body class="hold-transition login-page">
+<body>
+
+<div class="row " style="background: #e9ecef; padding-top: 10px;">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+   <?php
+            if (isset($_GET['status'])){
+              if ($_GET['status'] == 't'){ ?>
+                    <div style="text-align:center;" class="alert alert-success" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        Kindly login again thank you.
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                    </div>
+                     <?php
+                }
+
+            }
+            ?>
+            </div>
+            <div class="col-md-2"></div>
+ </div>
+<div class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
     <a href="#"><b>Login</b>Page</a>
@@ -88,9 +126,10 @@ if(isset($_POST['submit'])){
     <!-- /.login-card-body -->
   </div>
 </div>
+</div>
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<<?php include('include/jsFile.php'); ?>
+<?php include('include/jsFile.php'); ?>
 </body>
 </html>
