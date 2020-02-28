@@ -268,7 +268,7 @@
                 <li class="nav-item">
                   <a href="./index.html" class="nav-link">
                     <i class="far fa fa-file-pdf nav-icon"></i>
-                    <p>Generate Report</p>
+                    <p>Weekly Report</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -280,9 +280,15 @@
               <?php } else{ ?>
                 <!-- Supervisor -->
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="superviseGroup.php" class="nav-link">
                     <i class="far fa fa-user-plus nav-icon"></i>
                     <p>Supervise Groups</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="weeklyReportS.php" class="nav-link">
+                    <i class="far fa fa-file-pdf nav-icon"></i>
+                    <p>Weekly Report</p>
                   </a>
                 </li>
                 <li class="nav-item">

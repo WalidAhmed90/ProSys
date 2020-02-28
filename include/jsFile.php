@@ -38,3 +38,5 @@
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- SweetAlert2 -->
 <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- TimeAgo -->
+<script src="plugins/jquery-timeago/jquery.timeago.js"></script>

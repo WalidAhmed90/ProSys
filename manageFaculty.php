@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
             $contact = filter_input(INPUT_POST,'contact',FILTER_SANITIZE_NUMBER_INT);
             $quota = filter_input(INPUT_POST,'quota',FILTER_SANITIZE_NUMBER_INT);
-            $designation = filter_input(INPUT_POST,'designation',FILTER_SANITIZE_NUMBER_INT);
+            $isActive = filter_input(INPUT_POST,'isActive',FILTER_SANITIZE_NUMBER_INT);
             // prepare and bind
-            $stmt = $link->prepare("UPDATE  faculty JOIN work_load ON faculty.facultyId= work_load.facultyId SET facultyName = ?, designation = ?,facultyEmail = ?, facultyPhoneNo = ?,  totalLoad =?, designation=? WHERE faculty.facultyId = ?");
-            $stmt->bind_param("ssssiii", $name, $designation,$email,$contact, $quota,$designation,$editId);
+            $stmt = $link->prepare("UPDATE  faculty JOIN work_load ON faculty.facultyId= work_load.facultyId SET facultyName = ?, designation = ?,facultyEmail = ?, facultyPhoneNo = ?,  totalLoad =?, isActive=? WHERE faculty.facultyId = ?");
+            $stmt->bind_param("ssssiii", $name, $designation,$email,$contact, $quota,$isActive,$editId);
 
 
             $stmt->execute();
@@ -146,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <?php if (isset ($_GET['edit']) && is_numeric($_GET['edit']) && strlen($_GET['edit'])>0 )  {
                         $editId = filter_input(INPUT_GET,'edit',FILTER_SANITIZE_NUMBER_INT);
-                        $facultyName = null;
 
                         $sql = "SELECT * FROM faculty JOIN work_load WHERE faculty.facultyId = work_load.facultyId AND faculty.facultyId = '$editId' LIMIT 1 ";
                         $result = $link->query($sql);
@@ -160,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $password = $row['facultyPassword'];
                                 $contact = $row['facultyPhoneNo'];
                                 $quota = $row['totalLoad'];
-                                $designation = $row['designation'];
+                                $isActive = $row['isActive'];
                             }
                         }
                         ?>
@@ -229,9 +228,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <label class="col-sm-2 control-label">Status</label>
 
                                         <div class="col-sm-10">
-                                            <select name="designation" id="designation" style="width:200px;" required>
-                                                <option value="1" <?php if ($designation==1){echo 'selected';}?>>Active</option>
-                                                <option value="0" <?php if ($designation==0){echo 'selected';}?>>Inactive</option>
+                                            <select name="isActive" id="isActive" style="width:200px;" required>
+                                                <option value="1" <?php if ($isActive==1){echo 'selected';}?>>Active</option>
+                                                <option value="0" <?php if ($isActive==0){echo 'selected';}?>>Inactive</option>
                                             </select>
                                         </div>
                                     </div>

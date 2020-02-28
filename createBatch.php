@@ -27,34 +27,33 @@ if(!isset($_SESSION['user_id'])){
             //Check if BATCH already exists
             $sql = "SELECT batchId FROM batch WHERE batchName ='$batchName' LIMIT 1";
 
-            $result = $link->query($sql);
+            $result = mysqli_query($link,$sql);
 
-            if ($result->num_rows > 0) {
+            if (mysqli_num_rows($result) > 0) {
 
                 //Batch Already Exist
                 header('Location:' . $_SERVER['PHP_SELF'] . '?status=a');
             }else{
 
               
-                $stmt = $link->prepare("INSERT INTO batch (batchName, startingDate, isActive, fypPart) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param("ssii", $batchName, $startingDate, $isActive, $fypPart);
-                $stmt->execute();
+                $stmt = mysqli_prepare($link,"INSERT INTO batch (batchName, startingDate, isActive, fypPart) VALUES (?, ?, ?, ?)");
+                mysqli_stmt_bind_param($stmt,"ssii", $batchName, $startingDate, $isActive, $fypPart);
+                mysqli_stmt_execute($stmt);
 
-                if ($stmt->affected_rows > 0) {
+                if (mysqli_affected_rows($link) > 0) {
 
-                    
-                    $last_id = $stmt->insert_id;
+                    $last_id = mysqli_insert_id($link);
                     $sql = "INSERT INTO batch_settings (batchId) VALUES ('$last_id')";
 
-                    if ($link->query($sql) === TRUE) {
+                    if (mysqli_query($link,$sql) === TRUE) {
 
                        
                         if (!file_exists('uploads/'.$batchName)) {
                             mkdir('uploads/'.$batchName, 0777, true);
 
                            
-                            $stmt->close();
-                            $link->close();
+                            mysqli_close($stmt);
+                            mysqli_close($link);
                             header('Location:' . $_SERVER['PHP_SELF'] . '?status=t');die;
                         }
                     }
@@ -64,7 +63,7 @@ if(!isset($_SESSION['user_id'])){
                 else{
                    
                     header('Location:' . $_SERVER['PHP_SELF'] . '?status=f');die;
-                    printf("Error: %s.\n", $stmt->error);exit;
+                    printf("Error: %s.\n", mysqli_error($stmt));exit;
                 }
             }
         }

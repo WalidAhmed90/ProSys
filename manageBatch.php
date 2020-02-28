@@ -73,8 +73,8 @@ if(!isset($_SESSION['user_id'])){
                         </div>
                         <!-- /.card-header -->
 
-                        <div class="card-body">
-                            <table class="table" >
+                        <div class="card-body table-responsive">
+                            <table id="manageBatch" class="table table-head-fixed text-nowrap">
                                 <tr>
                                     <th>Batch Name</th>
                                     <th>FYP Part</th>
@@ -148,19 +148,15 @@ include("include/jsFile.php");
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#manageStudents').DataTable({
-            "columnDefs": [
-                { "orderable": false, "targets": -1 }
-            ],
-            "pageLength": 15,
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
+     $(document).ready(function() {
+        $('#manageBatch').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": false,
+      "info": true,
+      "autoWidth": false,
+    });
 
 
     } );

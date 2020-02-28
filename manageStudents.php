@@ -322,7 +322,8 @@ if(!isset($_SESSION['user_id'])){
                                                     <?php
                                                 } ?>
                                             </td>
-                                            <td><?php echo time2str($row['createdDtm']) ;?></td>
+                                            <td><time class="timeago" datetime="<?php echo $row['createdDtm'];?>"></time>
+                                            </td>
                                             <td>
 
 
@@ -385,11 +386,11 @@ if(!isset($_SESSION['user_id'])){
     $(document).ready(function() {
         $('#manageStudents').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": true,
       "ordering": false,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
     });
 
         function show() {
@@ -417,6 +418,12 @@ if(!isset($_SESSION['user_id'])){
 
 
 </script>
+<script type="text/javascript">
+   jQuery(document).ready(function() {
+     $("time.timeago").timeago();
+   });
+</script>
+
  
 
   </body>

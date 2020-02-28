@@ -97,7 +97,7 @@ if(!isset($_SESSION['user_id'])){
                   <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
                   <h3 class="timeline-header"><a href="#">Walid Ahmed</a> uploaded new photos</h3>
                   <div class="timeline-body">
-                    <img src="https://drive.google.com/uc?id=0B0mE9KGDehEOa0lZUWw1cE0yLWM" width="500px" height="350px" alt="...">
+                    <img src="https://drive.google.com/uc?id=0B0mE9KGDehEOa0lZUWw1cE0yLWM" class="img-fluid pr-3 " alt="Photo">
                   </div>
                 </div>
               </div>
