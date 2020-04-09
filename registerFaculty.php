@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                                 <div class="card-body table-responsive">
-                                    <table id="registerFacultys" class="table table-head-fixed text-nowrap table-hover">
+                                    <table id="registerFacultys" class="table table-striped table-hover">
                                         <thead>
                                         <tr>
                                             <th>Faculty No</th>

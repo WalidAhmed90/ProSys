@@ -64,16 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $fypPart = $row['fypPart'];
                 $groupId = $row['groupId'];
             } 
-            if ($inGroup < 1 OR $fypPart ==1){
+            if ($inGroup == 1 AND $fypPart ==1){
 
                 $sql = "SELECT requestId FROM faculty_student_request WHERE groupId ='$groupId' LIMIT 1";
                     $result = $link->query($sql);
 
                 if ($result->num_rows > 0) {
-                   /* echo "<script>alert('true')</script>";*/
+                     echo "<script>alert('true')</script>";
                     $sql = "DELETE from faculty_student_request WHERE groupId = '$groupId' ";
                     if ($link->query($sql) === TRUE) {
-                        //Delete group
+
+                //Delete group
                 // sql to delete a record
                 $sql = "DELETE from student_group WHERE leaderId = '$studentId' ";
                     if ($link->query($sql) === TRUE) {
@@ -111,14 +112,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 }
 
+            }else if ($inGroup > 1 AND $fypPart ==1){
+
+                $sql = "SELECT studentId FROM student WHERE groupId = '$groupId'";
+                $result = $link->query($sql);
+                echo "<script>alert('$count')</script>";  
+
+              
             }
+        
             
         }
-
     }
-
-
 }
+
+    
  ?>
 <head>
   <?php include('include/head.php'); ?>
@@ -198,7 +206,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                   </span>
                                                 <span class="text">Delete my group</span>
                                                 <small class="badge bg-success"><?php echo $projectName;?></small>
+                                       <?php          
+                                       $sql = "SELECT facultyStudentId FROM faculty_student_group WHERE groupId ='$groupId' LIMIT 1";
+                                       $result = $link->query($sql);
+                                        if ($result->num_rows > 0) {
+                                       ?>       
+                                                <label class="float-right">you can not delete this group because you have a supervisor. </label> 
+
+                                         <?php }else{ ?>        
                                                 <button type="submit" name="btnDeleteMyGroup" class="btn btn-danger  btn-xs float-right">Submit</button>
+                                          <?php } ?>      
                                             </li>
                                         </ul>
                                         </form>
@@ -216,11 +233,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- /.card -->
             </div>
           <!--/.col (left) -->
-          <!-- right column -->
-          <div class="col-md-6">
-
-          </div>
-          <!--/.col (right) -->
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

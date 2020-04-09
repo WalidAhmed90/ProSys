@@ -4,7 +4,7 @@ $subtitle = "Manage Students";
 session_start();
 include ("db/db_connect.php");
 include("mysql_table.php");
-include("include/functions.php");
+/*include("include/functions.php");*/
 
 if(!isset($_SESSION['user_id'])){
   header("location: login.php");
@@ -168,7 +168,7 @@ if(!isset($_SESSION['user_id'])){
                         <!-- general form elements -->
                         <div class="card card-primary card-outline">
                             <div class="card-header with-border">
-                                <h3 class="card-title"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit: <?php echo $name;?> </h3>
+                                <h3 class="card-title"><i class="fa fa-edit" aria-hidden="true"></i> Edit: <?php echo $name;?> </h3>
                             </div>
                             <!-- /.card-header -->
 
@@ -252,7 +252,7 @@ if(!isset($_SESSION['user_id'])){
                     }?>
 
 
-                    <div class="card no-border ">
+                    <div class="card card-primary card-outline no-border ">
                         <div class="card-header">
                             <h3 class="card-title">List of students</h3>
 
@@ -291,16 +291,14 @@ if(!isset($_SESSION['user_id'])){
                             ?>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive ">
-                                <table id="manageStudents" class="table table-head-fixed text-nowrap">
+                                <table id="manageStudents" class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>RID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Gender</th>
-                                        <th>Group Status</th>
-                                        <th><i class="fa fa-clock-o" aria-hidden="true"></i> Created</th>
-                                        <th>Actions</th>
+                                        <th width="10%">RID</th>
+                                        <th width="20%">Name</th>
+                                        <th width="40%">Email</th>
+                                         <th width="10%">Group Status</th>
+                                        <th width="20%">Actions</th>
                                     </tr>
                                     </thead>
                                     <?php
@@ -311,7 +309,7 @@ if(!isset($_SESSION['user_id'])){
                                             <td><?php echo $row['studentRid'] ;?></td>
                                             <td><?php echo $row['studentName'];?></td>
                                             <td><?php echo $row['studentEmail'] ;?></td>
-                                            <td><?php echo $row['studentGender'] ;?></td>
+                                            
                                             <td>
                                                 <?php if ($row['isLeader'] == 1 ){ ?>
                                                     <span class="badge bg-info">Group Leader</span>
@@ -322,8 +320,7 @@ if(!isset($_SESSION['user_id'])){
                                                     <?php
                                                 } ?>
                                             </td>
-                                            <td><time class="timeago" datetime="<?php echo $row['createdDtm'];?>"></time>
-                                            </td>
+                                            
                                             <td>
 
 

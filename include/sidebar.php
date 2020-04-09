@@ -11,7 +11,11 @@
       <!-- Sidebar user panel -->
       <div class="user-panel mt-3 mb-3 d-flex " >
         <div class="mb-2">
-          <img src="dist/img/pics/pic2.jpg" style="width: 57px" class="img-circle elevation-2 "  alt="User Image">
+          <img src="<?php if (isset($_SESSION['image'])) {
+                    echo 'public/profile_images/' . $_SESSION['image'];
+                } else {
+                    echo 'public/profile_images/dummy.png';
+                } ?>" style="width: 57px" class="img-circle elevation-2 "  alt="User Image">
         </div>
         <div class="info d-flex justify-content-center mt-1">
          <a href="profile.php"><p class="text-wrap text-left text-light text-bold"><?php
@@ -137,9 +141,21 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="meetingLogs.php" class="nav-link">
-                    <i class="far fa fa-list-ul nav-icon"></i>
-                    <p>Meeting Logs</p>
+                  <a href="studentMeetingRequest.php" class="nav-link">
+                   <i class="far fa-handshake"></i>
+                    <p>Meeting Request</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="weeklyReportS.php" class="nav-link">
+                    <i class="fas fa-calendar-week"></i>
+                    <p>View Weekly Report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="viewIdea.php" class="nav-link">
+                    <i class="far fa-lightbulb"></i>
+                    <p>View Share Ideas</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -184,7 +200,7 @@
               <li class="nav-item">
                 <a href="batchTemplates.php" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
-                  <p>Batch</p>
+                  <p>Batch Template</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -258,7 +274,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="manageTimeline.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Timeline</p>
                 </a>
@@ -266,9 +282,15 @@
             </ul>
           </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
-                    <i class="far fa fa-file-pdf nav-icon"></i>
+                  <a href="weeklyReportC.php" class="nav-link">
+                     <i class="far fa-handshake"></i>
                     <p>Weekly Report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="shareIdea.php" class="nav-link">
+                    <i class="far fa fa-lightbulb nav-icon"></i>
+                    <p>Share Ideas</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -286,26 +308,26 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="weeklyReportS.php" class="nav-link">
-                    <i class="far fa fa-file-pdf nav-icon"></i>
+                  <a href="weeklyReportF.php" class="nav-link">
+                    <i class="far fa fa-calendar-week nav-icon"></i>
                     <p>Weekly Report</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
-                    <i class="far fa fa-list-ul nav-icon"></i>
-                    <p>Meeting Logs</p>
+                  <a href="meetingRequest.php" class="nav-link">
+                    <i class="far fa-handshake nav-icon"></i>
+                    <p>Meeting Request</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="#" class="nav-link">
                     <i class="far fa fa-check-circle nav-icon"></i>
                     <p>Grading</p>
                   </a>
                 </li>
               
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="shareIdea.php" class="nav-link">
                     <i class="far fa fa-lightbulb nav-icon"></i>
                     <p>Share Ideas</p>
                   </a>

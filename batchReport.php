@@ -97,108 +97,100 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 </head>
 <body>
-
-<!-- general form elements -->
-<div class="card no-padding">
-    <div class="card-body ">
-        <div class="col-md-12">
-            <div class="">
-                <center>
-                <button class='export-pdf btn btn-primary btn-flat btn-lg'><i class="fa fa-file-pdf" aria-hidden="true"></i> Export as PDF</button>
-                <button class='export-img btn btn-primary btn-flat btn-lg'><i class="fa fa-file-image" aria-hidden="true"></i> Export as Image</button>
-                </center>
+    <!-- general form elements -->
+    <div class="card no-padding">
+        <div class="card-body ">
+            <div class="col-md-12">
+                <div class="">
+                    <center>
+                        <button class='export-pdf btn btn-primary btn-flat btn-lg'><i class="fa fa-file-pdf" aria-hidden="true"></i> Export as PDF</button>
+                        <button class='export-img btn btn-primary btn-flat btn-lg'><i class="fa fa-file-image" aria-hidden="true"></i> Export as Image</button>
+                    </center>
+                </div>
             </div>
         </div>
-
     </div>
+    <!-- /.card -->
 
-</div>
-<!-- /.card -->
-
-
-<page size="A4" class="groupReport">
-    <section class="invoice">
-        <!-- title row -->
-        <div class="row">
+    <page size="A4" class="groupReport">
+        <section class="invoice">
+            <!-- title row -->
+            <div class="row">
                 <div class="col-sm-8">
-                <h2 class="page-header">
-                    <img src="dist/img/IUlogo.png" alt="fyp_logo" length="52" width="250">
-                </h2>
+                    <h2 class="page-header">
+                        <img src="dist/img/IUlogo.png" alt="fyp_logo" length="52" width="250">
+                    </h2>
+                </div>
+                <div class="col-sm-4 float-right text-center">
+                    <h2 class="float-left">Date: <?php echo date("d/m/Y");?>
+                    </h2>
+                </div>
             </div>
-            <div class="col-sm-4 float-right text-center">
-                  <h2 class="float-left">Date: <?php echo date("d/m/Y");?></h2>
+
+            <!-- info row -->
+            <div class="row ">
+                <div class="col-sm-12 col-md-offset-3 ">
+                    <h4 class="text-center"><?php echo $batchName;?> : Report
+                    </h4>
+                    <br>
+                </div>
             </div>
-           
-            <!-- /.col -->
-        </div>
-        <!-- info row -->
-        <div class="row ">
-            <div class="col-sm-12 col-md-offset-3 ">
-                <h4 class="text-center"><?php echo $batchName;?> : Report</h4><br>
+
+            <!-- info row -->
+            <div class="row" >
+                <div class="col-md-6">
+                    <p class="float-left" >Student Registered : <?php echo $numOfStudents; ?></p>
+                    <br>
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-6 ">
+                    <p class="float-right" >Start Date : <?php echo $startDate; ?></p>
+                    <br>
+                </div>
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row" >
-            <div class="col-md-6">
-                <p class="float-left" >Student Registered : <?php echo $numOfStudents; ?></p><br>
-
-            </div>
-            <!-- /.col -->
-            <div class="col-md-6 ">
-                <p class="float-right" >Start Date : <?php echo $startDate; ?></p><br>
-            </div>
-        </div>
-        <!-- /.row -->
+            <!-- /.row -->
 
 
-
-        <!-- Table row -->
-        <h5>List of students</h5>
-        <div class="row">
-            <div class="col-sm-12 table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th style="width:40px;">RID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $sql = "SELECT * FROM student WHERE student.batchId = '$batchId' ";
-                    $result = mysqli_query($link,$sql);
-                    if (mysqli_num_rows($result) > 0) {
-
-                        // output data of each row
-                        while($row = mysqli_fetch_assoc($result)) { ?>
+            <!-- Table row -->
+            <h5>List of students</h5>
+            <div class="row">
+                <div class="col-sm-12 table-responsive">
+                    <table class="table table-head-fixed text-nowrap table-striped">
+                        <thead>
                             <tr>
-                                <td><?php echo $row['studentRid'];?></td>
-                                <td><?php echo $row['studentName'];?></td>
-                                <td><?php echo $row['studentEmail'];?></td>
-                                <td><?php echo $row['studentPhoneNo'];?></td>
+                                <th style="width:40px;">RID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
                             </tr>
-
+                        </thead>
+                        <tbody>
                             <?php
-                        }
-                    }
-                    ?>
-                    </tbody>
-                </table>
+                            $sql = "SELECT * FROM student WHERE student.batchId = '$batchId' ";
+                            $result = mysqli_query($link,$sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                // output data of each row
+                                while($row = mysqli_fetch_assoc($result)) { ?>
+                                    <tr>
+                                        <td><?php echo $row['studentRid'];?></td>
+                                        <td><?php echo $row['studentName'];?></td>
+                                        <td><?php echo $row['studentEmail'];?></td>
+                                        <td><?php echo $row['studentPhoneNo'];?></td>
+                                    </tr>
+
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-
-
-    </section>
-</page>
-
-
+            <!-- /.row -->
+        </section>
+    </page>
 </div>
 <script>
     // Import DejaVu Sans font for embedding
@@ -255,13 +247,6 @@ $(document).ready(function() {
                 });
             });
     });
-
-
-
-
-
-
-
 });
 </script>
 

@@ -7,18 +7,24 @@ if(!isset($_SESSION['user_id'])){
   header("location: login.php");
   }
 
+$image = $_SESSION["image"];
+
 //For Edit Profile
  if ($_SESSION['type']=="Student") {
    $sql = "SELECT * FROM student where studentRid = '".$_SESSION['user_id']."' ";
                                 $result = mysqli_query($link,$sql);
                                 $row = mysqli_fetch_array($result);
                                   if(mysqli_num_rows($result)>0){
-                                       $_SESSION['type'] = "Student";
-                                        $_SESSION["usrnm"]=$row["studentName"];
-                                        $_SESSION["usrId"]=$row["studentId"];
-                                        $_SESSION["usremail"]=$row["studentEmail"];
-                                        $_SESSION["usrcell"]=$row["studentPhoneNo"];
-                                        $_SESSION["usrgender"]=$row["studentGender"];
+                                       while($row = $result->fetch_assoc()) {
+                $name = $row['studentName'];
+                $rid = $row['studentRid'];
+                $email = $row['studentEmail'];
+                $image = $row['studentImage'];
+                $batchId = $row['batchId'];
+                $contact = $row['studentPhoneNo'];
+                $groupId = $row['groupId'];
+
+            }
                                       }
 
 
@@ -31,10 +37,10 @@ if(!isset($_SESSION['user_id'])){
           $gender = $_POST['gender'];
           $studentId = $_SESSION["usrId"];
 
-          $sql = "UPDATE student SET studentEmail='".$email."',studentPhoneNo='".$cell."',studentGender='".$gender."' WHERE studentId ='".$_SESSION['user_id']."' ";
+          $sql = "UPDATE student SET studentEmail='".$email."',studentPhoneNo='".$cell."',studentGender='".$gender."' WHERE studentId ='".$studentId."' ";
           if ($link->query($sql) === TRUE) {
-             echo "<script>alert('Data has been updated')</script>";
-            header('Location:' . $_SERVER['PHP_SELF'] . '?status=t');
+             header('Location:' . 'login.php' . '?status=t');
+            session_destroy();
         } else {
           echo "<script>alert('Error occur')</script>";
             header('Location:' . $_SERVER['PHP_SELF'] . '?status=f');
@@ -212,7 +218,9 @@ session_destroy();
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle" src="dist/img/pics/pic1.jpg" alt="User profile picture">
+                  <img class="profile-user-img img-fluid img-circle" src="<?php if (isset($image)){
+                                            echo 'public/profile_images/'.$image;
+                                        }else {echo 'public/profile_images/dummy.png';}?>" alt="User profile picture">
                 </div>
 
                 <h3 class="profile-username text-center text-wrap text-dark text-bold">
@@ -245,6 +253,10 @@ session_destroy();
                     <br>
 
                   <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal-info" id="EnableDisableBtn">Edit Profile</button>
+                  <a type="button" class="btn btn-info btn-block" href="<?php echo $_SERVER['PHP_SELF'] . '?removedProfile=' . $_SESSION['user_id']; ?>">
+                   Remove Profile
+                   </a>
+
 <?php if($_SESSION['type']=="Student") {?>
  <div class="modal fade" id="modal-info">
         <div class="modal-dialog">
@@ -262,17 +274,17 @@ session_destroy();
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Email</label>
-                 <input type="email" id="email" class="form-control" name="email" placeholder="<?php echo $_SESSION["usremail"];  ?>" required>
+                 <input type="email" id="email" class="form-control" name="email" value="<?php echo $_SESSION["usremail"];  ?>" required>
                 </div>
 
                  <div class="form-group">
                   <label>Phone</label>
-                 <input type="text" id="cell" class="form-control" name="cell" placeholder="<?php echo $_SESSION["usrcell"];  ?>" required>
+                 <input type="text" id="cell" class="form-control" name="cell" value="<?php echo $_SESSION["usrcell"];  ?>" required>
                 </div>
 
                  <div class="form-group">
                   <label>Gender</label>
-                 <input type="text" id="gender" class="form-control" name="gender" placeholder="<?php echo $_SESSION["usrgender"] ;  ?>" required>
+                 <input type="text" id="gender" class="form-control" name="gender" value="<?php echo $_SESSION["usrgender"] ;  ?>" required>
                 </div>
 
               </div>
@@ -313,12 +325,12 @@ session_destroy();
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Email</label>
-                 <input type="email" id="email" class="form-control" name="email" placeholder="<?php echo $_SESSION["usremail"];  ?>" required>
+                 <input type="email" id="email" class="form-control" name="email" value="<?php echo $_SESSION["usremail"];  ?>" required>
                 </div>
 
                  <div class="form-group">
                   <label>Phone</label>
-                 <input type="text" id="cell" class="form-control" name="cell" placeholder="<?php echo $_SESSION["usrcell"];  ?>" required>
+                 <input type="text" id="cell" class="form-control" name="cell" value="<?php echo $_SESSION["usrcell"];  ?>" required>
                 </div>
 
               </div>
@@ -390,13 +402,13 @@ session_destroy();
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form">
+              <form action="" method="post" enctype="multipart/form-data" data-toggle="validator">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="profileImage">Change profile picture.</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="profileImage">
+                        <input type="file" name="image" id="profileImage" class="custom-file-input btn btn-block btn-flat" accept=".jpg ,.jpeg, .png, .bmp, .svg" required>
                         <label class="custom-file-label" for="profileImage">Choose file</label>
                       </div>
                     </div>
@@ -405,7 +417,7 @@ session_destroy();
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary float-right">Submit</button>
+                  <button type="submit" value="Upload" class="btn btn-primary float-right">Submit</button>
                 </div>
               </form>
             </div>
@@ -450,6 +462,90 @@ document.getElementById("save").disabled = true;
 document.getElementById("EnableDisableBtn").disabled = false;
 }
 </script>
+<?php
+
+//Code implementation for remove photo
+if (isset($_GET['removedProfile']) and is_numeric($_GET["removedProfile"]) ){
+    $sql_remove='UPDATE student SET studentImage=? WHERE studentId=?';
+    $user_id=$_SESSION['usrId'];
+    $dummy_image=null;
+    $stmt_remove = $link->prepare($sql_remove);
+    if($stmt_remove === false) {
+    trigger_error('Wrong SQL: ' . $sql_remove . ' Error: ' . $link->error, E_USER_ERROR);
+    }
+    $stmt_remove->bind_param('ss',$dummy_image,$user_id);
+    $stmt_remove->execute();
+    $stmt_remove->close();
+    
+    $file = "public/profile_images/".$_SESSION["image"];
+    if (file_exists($file)){
+       if ($file=="public/profile_images/dummy.png"){
+        //Dont delete
+    }else{
+    if (unlink($file)){
+    $_SESSION["image"]=null;
+        header('Location:' . $_SERVER['PHP_SELF'] . '?status=remove');;
+    }else{header('Location:' . $_SERVER['PHP_SELF']);};
+    } 
+    }
+    
+    
+}
+
+//Code for Image upload 
+if (isset($_FILES['image'])){
+    $file=$_FILES['image'];
+    
+    //File properties
+    $file_name  =   $file['name'];
+    $file_tmp   =   $file['tmp_name'];
+    $file_size  =   $file['size'];
+    $file_error =   $file['error'];
+    
+    //Work out file extension
+    $file_ext   =   explode('.',$file_name);
+    $file_ext   = strtolower(end($file_ext));
+    
+    $allowed    = array('jpg','jpeg');
+
+    if(in_array($file_ext,$allowed)){
+    if($file_error === 0){
+        if($file_size <= 2097152){
+            $file_name_new  = uniqid('',true).'.'.$file_ext;
+            $file_destination   ='public/profile_images/'.$file_name_new;
+        }else {$error_msg='The picture size is greater than 2MiB';}
+        if(move_uploaded_file($file_tmp, $file_destination)){
+            //echo $file_destination;
+            $success_msg='File Uploaded Successfully';
+            $sql = "UPDATE student SET studentImage=? WHERE studentId=? ";
+            $stmt = $link->prepare($sql);
+            if($stmt === false) {
+            trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $link->error, E_USER_ERROR);
+            }
+            $stmt->bind_param('ss',$file_name_new,$_SESSION["usrId"]);
+            $stmt->execute();
+            //Delete old photo and set new photo
+           $file = "public/profile_images/".$_SESSION["image"];
+            if (file_exists($file)){
+               if ($file=="public/profile_images/dummy.png"){
+                //Dont delete
+            }else{
+            if (unlink($file)){
+                }else{};
+            } 
+            }
+            $_SESSION["image"]=$file_name_new;        
+           
+                
+            $stmt->close();
+            header('Location:' . $_SERVER['PHP_SELF'] . '?status=t');
+        }else {$error_msg='Error! File not uploaded';}
+    }
+    }else {$error_msg='File not uploaded';}
+}
+
+
+ ?>
 
   </body>
 </html>

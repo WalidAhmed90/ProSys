@@ -1,14 +1,33 @@
 <?php
 $title="ProSys";
 $subtitle="Manage Student Groups";
-include('include/header.php');
+include('include/head.php');
 include('db/db_connect.php');
+include("mysql_table.php");
 session_start();
 if(!isset($_SESSION['user_id']))
 {
     header("location: login.php");
 }
 
+if ($_SERVER['REQUEST_METHOD']== 'GET') {
+      //Send Request
+    if (isset($_GET["groupId"]) and is_numeric($_GET["groupId"]) ){
+
+        $groupId = filter_input(INPUT_GET, 'groupId');
+
+            $sql = "UPDATE `faculty_student_group` SET `remove_group`= 1 WHERE `groupId` = '$groupId'";
+
+            if ($link->query($sql) === TRUE) {
+
+                header('Location:' . $_SERVER['PHP_SELF'] . '?status=t');die;
+            } else {
+                header('Location:' . $_SERVER['PHP_SELF'] . '?status=f');die;
+            }
+        }
+      
+    
+}
 
 ?>
 <!-- DataTables -->
@@ -69,6 +88,126 @@ if(!isset($_SESSION['user_id']))
 
                     ?>
 
+                      <?php if (isset($_GET['details']) && is_numeric($_GET['details']) && strlen($_GET['details'])){ 
+
+                        $groupId = filter_input(INPUT_GET, 'details');
+
+                         $projectName = $link->query("SELECT projectName FROM student JOIN student_group ON student.groupId = student_group.groupId  WHERE student.groupId = '$groupId' LIMIT 1" )->fetch_object()->projectName;
+
+//Getting supervisor id and name
+$sql = "SELECT facultyId FROM faculty_student_group WHERE faculty_student_group.groupId = '$groupId' LIMIT 1 ";
+$result = $link->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $supervisorId =  $row["facultyId"];
+    }
+    $sql_name = "SELECT facultyName FROM faculty WHERE faculty.facultyId = '$supervisorId' ";
+    $result = $link->query($sql_name);
+            if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+            $supervisorName =  $row["facultyName"];
+            }
+
+        }
+}
+
+
+
+                        ?>
+
+
+                        <!-- Group Members details -->
+                       <div class="col-md-12">
+                        <div class="card card-primary card-outline">
+                        <div class="card-header with-border">
+                                <h3>Project Name:
+                                    <span class="font-weight-bold text-info text-capitalize"><?php echo $projectName?></span></h3>
+                                <!--Supervisor Name-->
+                                <h5>Supervisor:
+                                <span class="font-weight-bold text-info text-capitalize"><?php
+                                if (isset($supervisorName)){
+                                    echo $supervisorName;
+                                }else{ 
+                                echo ' --- ';
+                            }
+                                
+                                ?></span></h5>
+                                <?php if (isset($supervisorName) != "") {
+                                   ?>
+                                <h6 class="text-muted">For the permission to unsupervise the group please click on remove group button.</h6>
+                                 <h6 class="text-muted">Or you have already clicked the button.</h6>
+                            <?php } ?>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <!--GROUP MEMBERS-->
+                            <div class="card-header ">
+                                <h3 class="card-title text-primary font-weight-bold">Group Members</h3>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body  table-responsive">
+                                <table id="groupMembers" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Registration ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                    </tr>
+                                    </thead>
+                                    <?php
+                                    //$groupID = $_SESSION['GroupID'];
+                                    $sql = "SELECT * from student WHERE student.groupId = '$groupId' ";
+                                    $result = $link->query($sql);
+                                    while ($row = $result->fetch_assoc()) { ?>
+                                        <tr>
+                                            <td><?php echo $row['studentRid']; ?></td>
+                                            <td><?php echo $row['studentName'];
+                                            if ($row['isLeader'] == 1){
+                                               echo '  <span class="badge bg-primary">Leader</span>'; 
+                                            }
+                                            ?></td>
+                                            <td><?php echo $row['studentEmail']; ?></td>
+                                            <td><?php echo $row['studentPhoneNo']; ?></td>
+                                        </tr>
+                                    <?php }
+                                    ?>
+                                </table>
+                                
+                                
+                            </div>
+                           
+
+                        <div class="card-footer">
+                                 <a href="<?php echo $_SERVER['PHP_SELF'].'?' ; ?>" class="btn  btn-default btn-sm  "> Back</a>
+                                 <?php $sql = "SELECT * FROM faculty_student_group WHERE faculty_student_group.groupId = '$groupId' LIMIT 1 ";
+                                    $result = $link->query($sql);
+                                    if ($result->num_rows > 0) {
+                                     while($row = $result->fetch_assoc()) {
+                                        $remove_group =  $row["remove_group"];
+                                                 }
+                                    if ($remove_group == 1) {
+                                     
+                                    }else{
+                                  ?>
+                                <form  action="" method="get" onsubmit="return confirm('Are you sure you want to remove "<?php echo $row['studentName']; ?>"  from your group?');" data-toggle="validator">
+                                        <input type="hidden" name="groupId" value="<?php echo $groupId;?>">
+                                        <button type="submit" class="btn  btn-primary float-right "><i class="fas fa-user-slash"></i> Remove Group</button>
+                                    </form>
+                                    <?php } }?>
+                            </div>
+
+                        </div>
+                        <!-- /.card -->
+
+                    </div>
+                        <!-- /.card -->
+                    <?php
+                    }else{
+                    ?>
+
 
                     <!-- general form elements -->
                     <div class="card card-primary no-border">
@@ -77,8 +216,8 @@ if(!isset($_SESSION['user_id']))
                         </div>
                         <!-- /.card-header -->
 
-                        <div class="card-body table-responsive p-0">
-                            <table id="manageGroups" class="table table-head-fixed text-nowrap">
+                        <div class="card-body table-responsive ">
+                            <table id="manageGroups" class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>Batch</th>
@@ -104,7 +243,7 @@ if(!isset($_SESSION['user_id']))
                                                 $groupMembers = mysqli_query($link,"SELECT * FROM student WHERE groupId = '$groupId' ");
                                                 if (mysqli_num_rows($groupMembers) > 0){
                                                     while($member = mysqli_fetch_assoc($groupMembers)){ ?>
-                                                        <a href="<?php echo siteroot."studentProfile.php?id=".$member['studentId'] ;?>" target="_blank"><?php  echo $member['studentName']. " [" .$row['studentRid']. " ]"."<br/>"; ?></a>
+                                                       <?php  echo $member['studentName']. " (" .$row['studentRid']. " )"."<br/>"; ?>
                                                     <?php
                                                     }
                                                 }
@@ -113,7 +252,8 @@ if(!isset($_SESSION['user_id']))
                                             </td>
 
                                             <td>
-                                                <a href="<?php echo siteroot."groupReport.php?id=".$row['groupId'] ;?>" class="btn btn-default btn-flat btn-sm" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Show Report</a>
+                                                <a href="<?php echo $_SERVER['PHP_SELF']."?details=".$row['groupId'];?>" class="btn btn-default btn-sm"><i class="fa fa-info-circle" aria-hidden="true"></i> Details</a>
+                                            
                                             </td>
                                         </tr>
 
@@ -129,12 +269,12 @@ if(!isset($_SESSION['user_id']))
                         </div>
                         <!-- /.card-body -->
 
-                        <div class="card-footer">
-
-                        </div>
+                        
 
                     </div>
                     <!-- /.card -->
+
+                   <?php  }?>
 
                 </div>
 
@@ -148,20 +288,24 @@ include('include/footer.php');
 <?php
 include('include/jsFile.php');
 ?>
-<!-- DataTables -->
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+
 <script>
+function goBack() {
+        window.history.back();
+    }
+
+
     $(document).ready(function() {
         $('#manageGroups').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": true,
       "ordering": false,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
     });
 
+ } );
 
 
 </script>

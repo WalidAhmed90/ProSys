@@ -30,6 +30,8 @@ if(isset($_POST['submit'])){
         $_SESSION["usremail"]=$row["studentEmail"];
         $_SESSION["usrcell"]=$row["studentPhoneNo"];
         $_SESSION["usrgender"]=$row["studentGender"];
+        $_SESSION["image"]=$row["studentImage"];
+        $_SESSION["groupId"]=$row["groupId"];
 
         echo "<script>window.open('index.php','_self')</script>";
     }
@@ -41,6 +43,10 @@ if(isset($_POST['submit'])){
         $_SESSION["usremail"]=$row1["facultyEmail"];
         $_SESSION["usrcell"]=$row1["facultyPhoneNo"];
         $_SESSION["designation"]=$row1["designation"];
+        $_SESSION["image"]=$row1["facultyImage"];
+        $_SESSION["isCord"]=$row1["isCoordinator"];
+        
+
         echo "<script>window.open('index.php','_self')</script>";
     }
   else{

@@ -5,8 +5,10 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
+<!-- popper  -->
+<script src="plugins/popper/popper.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <!-- ChartJS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -40,3 +42,4 @@
 <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- TimeAgo -->
 <script src="plugins/jquery-timeago/jquery.timeago.js"></script>
+

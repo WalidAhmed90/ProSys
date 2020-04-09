@@ -88,11 +88,11 @@ function time2str($ts) {
 
 
 function getStudentData($id) {
-    global $conn;
+    global $link;
 
     // build the query
     $sql = "SELECT * from student WHERE student.studentId = '$id' LIMIT 1";
-    $result = $conn->query($sql);
+    $result = $link->query($sql);
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
@@ -101,6 +101,7 @@ function getStudentData($id) {
                 "name"=>$row['studentName'],
                 "email"=>$row['studentEmail'],
                 "gender"=>$row['studentGender'],
+                "studentimage"=>$row['studentImage'],
             );
 
             return $studentData;
@@ -127,32 +128,32 @@ function get_icon($filename){
 
     switch($file_ext){
         //Documents
-        case 'docx':{echo 'fa fa-file-word-o' ; break;}
-        case 'doc':{echo 'fa fa-file-word-o' ; break;}
-        case 'txt':{echo 'fa fa-file-text-o' ; break;}
-        case 'pdf':{echo 'fa fa-file-pdf-o'; break;}
+        case 'docx':{echo 'text-primary fa fa-file-word' ; break;}
+        case 'doc':{echo 'text-primary fa fa-file-word' ; break;}
+        case 'txt':{echo 'text-secondary fa fa-file-text' ; break;}
+        case 'pdf':{echo 'text-danger fa fa-file-pdf'; break;}
 
         //Compressed Files
-        case 'rar':{echo 'fa fa-file-archive-o' ; break;}
-        case 'zip':{echo 'fa fa-file-archive-o' ; break;}
-        case '7zip':{echo 'fa fa-file-archive-o' ; break;}
-        case 'iso':{echo 'fa fa-file-archive-o' ; break;}
+        case 'rar':{echo 'fa fa-file-archive' ; break;}
+        case 'zip':{echo 'fa fa-file-archive' ; break;}
+        case '7zip':{echo 'fa fa-file-archive' ; break;}
+        case 'iso':{echo 'fa fa-file-archive' ; break;}
 
         //Image
-        case 'jpg':{echo 'fa fa-file-image-o'; break;}
-        case 'jpeg':{echo 'fa fa-file-image-o'; break;}
-        case 'png':{echo 'fa fa-file-image-o'; break;}
-        case 'gif':{echo 'fa fa-file-image-o'; break;}
+        case 'jpg':{echo 'fa fa-file-image'; break;}
+        case 'jpeg':{echo 'fa fa-file-image'; break;}
+        case 'png':{echo 'fa fa-file-image'; break;}
+        case 'gif':{echo 'fa fa-file-image'; break;}
 
         //Powerpoint
-        case 'ppt':{echo 'fa fa-file-powerpoint-o'; break;}
-        case 'pptx':{echo 'fa fa-file-powerpoint-o'; break;}
+        case 'ppt':{echo 'text-warning fa fa-file-powerpoint'; break;}
+        case 'pptx':{echo 'text-warning fa fa-file-powerpoint'; break;}
 
         //Excel
-        case 'xlsx':{echo 'fa fa-file-excel-o'; break;}
+        case 'xlsx':{echo 'text-success fa fa-file-excel'; break;}
 
         //Default
-        default:{echo 'fa fa-file-o'; break;}
+        default:{echo 'fa fa-file'; break;}
     }
 
 
@@ -161,10 +162,10 @@ function get_icon($filename){
 }
 
 function check_group_uploads ($groupId,$taskId,$batchId){
-    global $conn;
+    global $link;
 
     $sql = "SELECT * FROM batch_tasks JOIN group_uploads ON batch_tasks.taskId = group_uploads.taskId WHERE groupId = '$groupId' AND batchId = '$batchId' AND batch_tasks.taskId = '$taskId' LIMIT 1 ";
-    $result = $conn->query($sql);
+    $result = $link->query($sql);
 
     if ($result->num_rows > 0) {
         return true;

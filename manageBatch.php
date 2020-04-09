@@ -74,7 +74,7 @@ if(!isset($_SESSION['user_id'])){
                         <!-- /.card-header -->
 
                         <div class="card-body table-responsive">
-                            <table id="manageBatch" class="table table-head-fixed text-nowrap">
+                            <table id="manageBatch" class="table  table-striped">
                                 <tr>
                                     <th>Batch Name</th>
                                     <th>FYP Part</th>
@@ -92,7 +92,11 @@ if(!isset($_SESSION['user_id'])){
                                     while($row = mysqli_fetch_assoc($result)) { ?>
                                         <tr>
                                             <td><?php echo $row['batchName']; ?></td>
-                                            <td><?php echo $row['fypPart']; ?></td>
+                                            <td><?php if($row['fypPart']== 1){
+                                            	echo "Project Proposal";
+                                            }else {
+                                            	echo "Project Defence";
+                                            } ?></td>
                                             <td><?php
                                                 $batchId = $row['batchId'];
                                                 $sql="SELECT studentRid FROM student WHERE batchId ='$batchId' ";
@@ -107,8 +111,7 @@ if(!isset($_SESSION['user_id'])){
                                                 }  ?>
                                             </td>
                                             <td>
-                                              <!--   <?php echo "batchReport.php?id=".$row['batchId'] ;?>  -->
-                                                <a href="#" class="btn btn-default btn-flat btn-sm" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Show Report</a>
+                                              <a href="<?php echo "batchReport.php?id=".$row['batchId'] ;?>" class="btn btn-default btn-flat btn-sm" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Show Report</a>
                                             </td>
                                         </tr>
 

@@ -97,167 +97,185 @@ $result = $link->query($sql_check);
 <head>
   <?php include('include/head.php'); ?>
 </head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-  <!-- Navbar -->
-  <?php include('include/navbar.php'); ?>
-  <!-- /.navbar -->
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <?php include('include/navbar.php'); ?>
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <?php include ('include/sidebar.php'); ?>
+    <!-- Main Sidebar Container -->
+    <?php include ('include/sidebar.php'); ?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <?php include ('include/contentheader.php'); ?>
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <?php include ('include/contentheader.php'); ?>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
 
-        <?php
-        if (isset($_GET['status'])){
-            if ($_GET['status'] == 't'){ ?>
-                <div style="text-align:center;" class="alert alert-success" role="alert">
+              <?php
+              if (isset($_GET['status'])){
+                if ($_GET['status'] == 't'){ ?>
+                  <div style="text-align:center;" class="alert alert-success" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     Request sent to supervisor successfully!
                     <button type="button" class="close" data-dismiss="alert">x</button>
-                </div>
-                <?php
-            }
-            else  if ($_GET['status'] == 'f'){ ?>
-                <div style="text-align:center;" class="alert alert-danger" role="alert">
+                  </div>
+
+                  <?php
+                } else  if ($_GET['status'] == 'f'){ 
+                  ?>
+
+                  <div style="text-align:center;" class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     Error! Something Went Wrong
                     <button type="button" class="close" data-dismiss="alert">x</button>
-                </div>
-                <?php
-            }
-            else if ($_GET['status'] == 'req_del_t'){ ?>
-                <div style="text-align:center;" class="alert alert-success" role="alert">
+                  </div>
+
+                  <?php
+                } else if ($_GET['status'] == 'req_del_t'){ 
+                  ?>
+
+                  <div style="text-align:center;" class="alert alert-success" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     Request Deleted Successfully!
                     <button type="button" class="close" data-dismiss="alert">x</button>
-                </div>
-                <?php
-            }
-            else if ($_GET['add'] == 'req_del_f'){ ?>
-                <div style="text-align:center;" class="alert alert-danger" role="alert">
+                  </div>
+
+                  <?php
+                } else if ($_GET['add'] == 'req_del_f'){ 
+                  ?>
+
+                  <div style="text-align:center;" class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     Error! Something Went Wrong
                     <button type="button" class="close" data-dismiss="alert">x</button>
+                  </div>
+
+                  <?php
+                }
+              }
+              ?>
+
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                  Info</h3>
                 </div>
+
                 <?php
-            }
-
-        }
-        ?>
-
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> Info</h3>
-            </div>
-              <?php 
-              //If request is sent to supervisor or group already has a supervisor
-              if ($request_sent == true){ ?>
-            <div class="card-body ">
-              <h4>You can not sent request to supervisor</h4>
-                <p>This may be due to reasons</p>
-                <ul>
-                    <li>You already have a group supervisor</li>
-                    <!--<li>You have sent request to a supervisor</li>-->
-                    <form action="" name="cancelRequest" method="POST" data-toggle="validator">
-                      <li >You have sent request to a supervisor already
-                        <?php if (isset($requestId)){ ?>
+                //If request is sent to supervisor or group already has a supervisor
+                if ($request_sent == true){ ?>
+                  <div class="card-body ">
+                    <h4>You can not sent request to supervisor</h4>
+                    <p>This may be due to reasons</p>
+                    <ul>
+                      <li>You already have a group supervisor</li>
+                      <!--<li>You have sent request to a supervisor</li>-->
+                      <form action="" name="cancelRequest" method="POST" data-toggle="validator">
+                        <li >You have sent request to a supervisor already
+                          <?php if (isset($requestId))
+                          { ?>
                             <input type="hidden" name="deleteId" value="<?php echo $requestId;?>">
                             <button type="submit" name="btnDeleteReq" class="btn btn-default btn-flat btn-xs"><i class="fa fa-user-times" aria-hidden="true"></i> Cancel Request</button>
-                        <?php
-                        }?>
-                      </li>
-                    </form>
-                </ul>
-            </div>
-            <?php  }
-            //If request is not sent
+                            <?php
+                          } ?>
+                        </li>
+                      </form>
+                    </ul>
+                  </div>
+                <?php  
+              }
+              //If request is not sent
               else{ ?>
-              
-               <!-- /.card-header -->
-            <div class="card-body ">
-              <table id="chooseSupervisor" class="table table-hover" >
-              <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Designation</th>
-                    <th>Supervising Quota</th>
-                    <th>Action</th>
-                </tr>
-              </thead>
+
+                <!-- /.card-header -->
+                <div class="card-body ">
+                  <table id="chooseSupervisor" class="table table-head-fixed text-nowrap table-striped" >
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Designation</th>
+                        <th>Supervising Quota</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
                     <?php
                     $sql = "SELECT * FROM faculty JOIN work_load ON faculty.facultyId = work_load.facultyId WHERE currentLoad < totalLoad ";
                     $result = $link->query($sql);
                     if ($result->num_rows > 0) {
-                    // output data of each row
-                        while($row = $result->fetch_assoc()) {
-                            ?>
-                            <tr>
-                            <td><?php echo $row["facultyName"]; ?></td>
-                            <td><?php echo $row["facultyEmail"]; ?></td>
-                            <td><?php echo $row["designation"]; ?></td>
-                            <td><span class="badge bg-warning">
-                                <?php
-                                echo 'Current:'.$row['currentLoad'].' Total '.$row['totalLoad'];
-                                ?>
-                                </span>
-                            </td>
-                            <td>
+                      // output data of each row
+                      while($row = $result->fetch_assoc()) {
+                        ?>
+                        <tr>
+                          <td>
+                            <?php echo $row["facultyName"]; ?>
+                          </td>
+                          <td>
+                            <?php echo $row["facultyEmail"]; ?>
+                          </td>
+                          <td>
+                            <?php echo $row["designation"]; ?>
+                          </td>
+                          <td>
+                            <span class="badge bg-warning">
+                              <?php
+                              echo 'Current:'.$row['currentLoad'].' Total '.$row['totalLoad'];
+                              ?>
+                            </span>
+                          </td>
+                          <td>
                             <form name="chooseSupervisor" action="" method="post" data-toggle="validator">
-                                <input type= "hidden" name="facultyId" value="<?php echo $row["facultyId"]; ?>"/>
-                                <button type="submit" name="btnChooseSupervisor"  id="btnChooseSupervisor"   class="btn btn-primary btn-sm btn-flat form-group"><i class="fa fa-user-plus" aria-hidden="true"></i> Send Request</button>
+                              <input type= "hidden" name="facultyId" value="<?php echo $row["facultyId"]; ?>"/>
+                              <?php
+                              if ($row["designation"] == "Supervisor") {
+                                ?>
+                                <button type="submit" name="btnChooseSupervisor"  id="btnChooseSupervisor"   class="btn btn-primary btn-sm btn-flat form-group">
+                                  <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                  Send Request
+                                </button>
+                                <?php
+                              } else{
+                              }
+                              ?>
                             </form>
-                            </td>
-                            </tr>
-                        <?php }
+                          </td>
+                        </tr>
+                        <?php
+                      }
                     }
-                            ?>
-              </table>
-                <div class="card-footer">
-                    <a href="<?php echo siteroot; ?>" class="btn btn-default btn-sm">Back</a>
+                    ?>
+                  </table>
+                  <div class="card-footer">
+                    <a href="<?php echo siteroot; ?>" class="btn btn-default btn-sm">
+                    Back</a>
+                  </div>
                 </div>
+                <!-- /.card-body -->
+                <?php
+              }
+              ?>
             </div>
-            <!-- /.card-body -->
-                  
-            <?php  } ?>
-              
-           
+            <!-- /.card -->
           </div>
-          <!-- /.card -->
-
-    </div>
-
-            </div>
         </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <?php include('include/footer.php'); ?>
+    <!-- Control Sidebar -->
+    <!-- /.control-sidebar -->
   </div>
-  <!-- /.content-wrapper -->
-  <?php include('include/footer.php'); ?>
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
+  <!-- ./wrapper -->
 
-<!-- jQuery -->
-<?php include ('include/jsFile.php'); ?>
-<!-- .jQuery -->
-
+  <!-- jQuery -->
+  <?php include ('include/jsFile.php'); ?>
+  <!-- .jQuery -->
 </body>
-</html>

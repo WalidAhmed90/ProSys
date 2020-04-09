@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <small class="pull-right">Supervisor: <?php if (isset($supervisorName)){echo $supervisorName;}?></small>
                                 </h2>
 
-                                <table class="table table-striped">
+                                <table class="table table-head-fixed text-nowrap table-striped">
                                     <thead>
                                     <tr>
                                         <th>Rid</th>

@@ -3,7 +3,6 @@ $title="ProSys";
 $subtitle="Manage Faculty";
 include('db/db_connect.php');
 include("mysql_table.php");
-include("include/functions.php");
 session_start();
 if(!isset($_SESSION['user_id']))
 {
@@ -262,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive ">
-                                <table id="manageFaculty" class="table table-head-fixed text-nowrap">
+                                <table id="manageFaculty" class="table table-striped">
                                     <thead>
                                 <tr>
                                     <th>Name</th>

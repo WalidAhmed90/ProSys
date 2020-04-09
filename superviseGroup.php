@@ -6,15 +6,83 @@ include ('db/db_connect.php');
 if(!isset($_SESSION['user_id'])){
   header("location: login.php");
   }
+$facultyId = $_SESSION['usrId'];
+$facultyName = $_SESSION["usrnm"];
+  //Function for remove Request
+    if (isset($_GET["remove"]) AND is_numeric($_GET["remove"]) ){
 
-  //Getting values from SESSION
-$facultyId = $_SESSION["usrId"];
+        $id = filter_input(INPUT_GET, 'remove');
+           //If request accepted delete request from record
+                 $sql = "DELETE FROM `meeting_requests` WHERE `group_id` ='$id' ";
+                if ($link->query($sql) === TRUE) {
+                    //Record also deleted
+                      $sql = "DELETE FROM `weekly_report` WHERE `group_Id` ='$id' ";
+                if ($link->query($sql) === TRUE) {
 
-//Check if form is submitted by GET
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                     $sql = "DELETE FROM `faculty_student_group` WHERE `groupId` ='$id' ";
+                if ($link->query($sql) === TRUE) {
+                    //Record also deleted
+                    //Increment value of currentload
+                    $sql = "UPDATE work_load SET currentLoad = currentLoad -1 WHERE facultyId = '$facultyId'";
+                    if ($link->query($sql) === TRUE) {
+
+                        /****
+                         * Add this to timeline
+                         *  Zeeshan Sabir is now supervising group (FYP Management System)
+                         *  Faculty Name from facultyId (SESSION)
+                         *  Group Name from groupId
+                         *
+                         */
+                        //Add this info to the students and faculty timeline
 
 
-}
+
+
+                        //Get Batch id,projectName and SDP part from groupId
+                        $sql = "SELECT * FROM student_group WHERE groupId = '$id' LIMIT 1";
+                        $result = $link->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                $batchId = $row['batchId'];
+                                $projectName = $row['projectName'];
+                                $fypPart = $row['fypPart'];
+                            }
+                        }
+
+                        $title = 'Info';
+                        $details = $facultyName." is not supervising group ".$projectName;
+
+                        $sql = "INSERT INTO timeline_student (title, details, type, batchId, fypPart) VALUES ('$title', '$details', 'info', '$batchId', '$fypPart')";
+
+                        if ($link->query($sql) === TRUE) {
+                            $sql = "INSERT INTO timeline_faculty (title, details, type, batchId, fypPart) VALUES ('$title', '$details', 'info', '$batchId', '$fypPart')";
+
+                            if ($link->query($sql) === TRUE) {
+                               header('Location:' . $_SERVER['PHP_SELF'] . '?status=t');die;
+                            }else
+                            {
+                                  header('Location:' . $_SERVER['PHP_SELF'] . '?status=e');die;
+                            }
+
+
+                        }
+                    }
+
+                    
+                }
+            } 
+        }
+    }
+            
+            
+        
+            
+               
+
+
+
 
 //Check if form is submitted by POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -96,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- /.card-header -->
 
                         <div class="card-body table-responsive">
-                            <table id="superviseGrouptable" class="table table-head-fixed text-nowrap">
+                            <table id="superviseGrouptable" class="table table-head-fixed text-nowrap table-striped">
                                 <tr>
                                     <th>Group</th>
                                     <th>Project Name</th>
@@ -121,8 +189,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 ?>
                                             </td>
                                             <td>
-                                                <a href="<?php echo $_SERVER['PHP_SELF']."?details=".$row['groupId'];?>" class="btn btn-default btn-sm">Details</a>
-                                                <a href="<?php echo $_SERVER['PHP_SELF']."?uploads=".$row['groupId'];?>" class="btn btn-default btn-sm"> <i class="fa fa-upload"></i>Deliverables</a>
+                                                <a href="<?php echo $_SERVER['PHP_SELF']."?details=".$row['groupId'];?>" class="btn-primary btn-block  btn-sm"><i class="fa fa-info-circle" aria-hidden="true"></i> Details</a>
+                                                <?php if ($row['remove_group']==1) {
+                                                    
+                                                 ?>
+                                                <a href="<?php echo $_SERVER['PHP_SELF']."?remove=".$row['groupId'];?>" class="btn-danger btn-block  btn-sm"><i class="fa fa-times" aria-hidden="true"></i> Remove</a>
+                                            <?php }?>
+                                                <a href="<?php echo $_SERVER['PHP_SELF']."?uploads=".$row['groupId'];?>" class="btn btn-block btn-default btn-sm"> <i class="fa fa-upload"></i>Deliverables</a>
                                             </td>
 
                                         </tr>
@@ -148,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="card-body ">
                                 <table class="table table-condensed ">
                                     <tr>
-                                        <th style="width: 10px">CMS</th>
+                                        <th style="width: 10px">Rid</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Contact</th>
@@ -190,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <!-- /.card-header -->
 
                             <div class="card-body ">
-                                <table class="table table-responsive ">
+                                <table class="table table-head-fixed text-nowrap table-striped">
                                     <tr>
                                         <th>Title</th>
                                         <th>Deliverable</th>
@@ -225,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                                     $group = 'Group '.$groupId;
 
-                                                    $location = siteroot."uploads/".$batchName."/".$group."/".$deliverableName;
+                                                    $location = "uploads/".$batchName."/".$group."/".$deliverableName;
                                                     echo "<a href=\"$location\">$deliverableName</a>" ;
 
                                                     ?></td>
