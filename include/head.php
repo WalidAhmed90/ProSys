@@ -42,11 +42,11 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
   <link rel="stylesheet" href="plugins/jquery-ui/jquery-ui.css">
-  <script src="plugins/jquery-ui/jquery-ui.min.css"></script>
-  <script src="plugins/jquery-ui/jquery-ui.structure.css"></script>
-  <script src="plugins/jquery-ui/jquery-ui.structure.min.css"></script> 
-  <script src="plugins/jquery-ui/jquery-ui.theme.css"></script>
-  <script src="plugins/jquery-ui/jquery-ui.theme.min.css"></script>
-  <!-- DataTables -->
+ <script src="plugins/jquery-ui/jquery-ui.min.css"></script>
+ <script src="plugins/jquery-ui/jquery-ui.structure.css"></script>
+ <script src="plugins/jquery-ui/jquery-ui.structure.min.css"></script> 
+ <script src="plugins/jquery-ui/jquery-ui.theme.css"></script>
+ <script src="plugins/jquery-ui/jquery-ui.theme.min.css"></script>
+ <!-- DataTables -->
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 

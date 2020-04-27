@@ -320,7 +320,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="grading.php" class="nav-link">
                     <i class="far fa fa-check-circle nav-icon"></i>
                     <p>Grading</p>
                   </a>

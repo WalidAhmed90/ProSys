@@ -1,8 +1,6 @@
 <?php
-
 //insert.php
 $connect = mysqli_connect("localhost", "root", "", "fypms");
-
 
 $query = "
 INSERT INTO student (studentName, studentRid,studentPassword, batchId, isActive) VALUES (?, ?, ?, ?, ?)
@@ -11,8 +9,7 @@ $password="iuk123";
 $isActive=1;
 
 for($count = 0; $count<count($_POST['hidden_first_name']); $count++)
-{	
-
+{
 	$data = array(
 		$full_name=	$_POST['hidden_full_name'][$count],
 		$reg_id=	$_POST['hidden_reg_id'][$count],

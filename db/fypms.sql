@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2020 at 01:29 PM
+-- Generation Time: Apr 11, 2020 at 06:44 PM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.1.12
 
@@ -43,8 +43,8 @@ CREATE TABLE `batch` (
 
 INSERT INTO `batch` (`batchId`, `batchName`, `startingDate`, `isActive`, `fypPart`, `createdDtm`) VALUES
 (1, 'Spring 2020', '2020-01-01', 1, 1, '2020-02-12 13:29:08'),
-(2, 'Fall 2020', '2020-03-30', 1, 1, '2020-03-29 04:02:35'),
-(3, 'Spring 2019', '2020-04-05', 1, 1, '2020-04-05 10:40:36');
+(2, 'Fall 2020', '2020-03-30', 0, 1, '2020-03-29 04:02:35'),
+(3, 'Spring 2019', '2020-04-05', 0, 1, '2020-04-05 10:40:36');
 
 -- --------------------------------------------------------
 
@@ -53,6 +53,7 @@ INSERT INTO `batch` (`batchId`, `batchName`, `startingDate`, `isActive`, `fypPar
 --
 
 CREATE TABLE `batch_settings` (
+  `settingId` int(11) NOT NULL,
   `batchId` int(255) NOT NULL,
   `fyp1_grading` tinyint(1) NOT NULL,
   `fyp2_grading` tinyint(1) NOT NULL
@@ -62,10 +63,10 @@ CREATE TABLE `batch_settings` (
 -- Dumping data for table `batch_settings`
 --
 
-INSERT INTO `batch_settings` (`batchId`, `fyp1_grading`, `fyp2_grading`) VALUES
-(2, 0, 0),
-(1, 0, 0),
-(3, 0, 0);
+INSERT INTO `batch_settings` (`settingId`, `batchId`, `fyp1_grading`, `fyp2_grading`) VALUES
+(1, 2, 0, 0),
+(2, 1, 1, 0),
+(3, 3, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -184,8 +185,10 @@ CREATE TABLE `faculty_student_group` (
 --
 
 INSERT INTO `faculty_student_group` (`facultyStudentId`, `groupId`, `facultyId`, `remove_group`) VALUES
-(10, 21, 2, 0),
-(12, 20, 2, 0);
+(12, 20, 2, 0),
+(13, 16, 3, 0),
+(14, 22, 3, 0),
+(15, 21, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -212,10 +215,19 @@ CREATE TABLE `grades` (
   `groupId` int(11) DEFAULT NULL,
   `fypPart` int(11) DEFAULT NULL,
   `comments` text,
-  `grade` varchar(50) DEFAULT NULL,
+  `grade` int(50) DEFAULT NULL,
   `gradedBy` int(11) DEFAULT NULL COMMENT 'User id of user',
   `gradeDtm` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
+
+--
+-- Dumping data for table `grades`
+--
+
+INSERT INTO `grades` (`id`, `studentId`, `groupId`, `fypPart`, `comments`, `grade`, `gradedBy`, `gradeDtm`) VALUES
+(1, 10, 20, 1, 'no', 10, 4, '2020-04-09 20:48:50'),
+(2, 14, 20, 1, 'no', 10, 4, '2020-04-09 20:48:50'),
+(3, 20, 20, 1, 'yes', 9, 4, '2020-04-09 20:48:50');
 
 -- --------------------------------------------------------
 
@@ -267,13 +279,6 @@ CREATE TABLE `meeting_requests` (
   `meeting_status` enum('Pending','Done','Cancelled','Postponed') NOT NULL DEFAULT 'Pending',
   `created_dtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Maintain all meeting logs of supervisors with students';
-
---
--- Dumping data for table `meeting_requests`
---
-
-INSERT INTO `meeting_requests` (`id`, `supervisor_id`, `group_id`, `meeting_title`, `meeting_dtm`, `comments`, `meeting_status`, `created_dtm`) VALUES
-(1, 2, 20, 'meet me at library', '2020-04-05 15:04:00', NULL, 'Pending', '2020-04-05 08:13:13');
 
 -- --------------------------------------------------------
 
@@ -350,7 +355,7 @@ INSERT INTO `student` (`studentId`, `studentName`, `studentRid`, `studentEmail`,
 (18, 'azeem khan', '12429', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-01 05:34:26'),
 (19, 'mohi khan', '12430', 'mohikhan345@gmail.com', '09764336738', 'male', '123', NULL, 21, 1, 1, 1, '2020-03-01 05:34:38'),
 (20, 'walid ahmed', '12422', 'walidkhan345@gmail.com', '03122990486', 'male', '123', '5e8892f109cfb8.43621097.jpg', 20, 1, 1, 1, '2020-03-01 05:38:46'),
-(21, 'Mubashir Hussain', '12431', '', '', '', 'iuk123', NULL, 19, 1, 1, 1, '2020-03-27 20:52:05'),
+(21, 'Mubashir Hussain', '12431', '', '', '', 'iuk123', NULL, 23, 1, 1, 1, '2020-03-27 20:52:05'),
 (22, 'haroon rasheed', '12432', '', '', '', 'iuk123', NULL, 22, 1, 1, 1, '2020-03-27 20:52:28'),
 (23, 'Ather Anwar', '12433', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-27 20:52:49'),
 (24, 'talha khan', '12434', 'talhakhan@gmail.com', '1134534546464', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-27 20:53:02');
@@ -382,7 +387,8 @@ INSERT INTO `student_group` (`groupId`, `projectName`, `categories`, `descriptio
 (16, 'IU Chat Bot', 'Artificial Intelligence', 'university chatbot..', 1, 1, 3, 2, 12, '2020-03-01 03:16:40'),
 (20, 'proSys', 'web portal', 'jsvps;lv;s', 1, 1, 3, 3, 20, '2020-03-01 06:00:50'),
 (21, 'smart robot', 'Robotics', 'my first smart robot', 1, 1, 3, 1, 19, '2020-03-09 01:10:51'),
-(22, 'yycvg', '3D/4D Printing', 'drdyhh', 1, 1, 3, 1, 22, '2020-03-27 21:19:46');
+(22, 'yycvg', '3D/4D Printing', 'drdyhh', 1, 1, 3, 1, 22, '2020-03-27 21:19:46'),
+(23, 'Smart Card', 'Augmented Reality/Virtual Reality', 'based on augmented reality', 1, 1, 3, 1, 21, '2020-04-09 20:24:34');
 
 -- --------------------------------------------------------
 
@@ -431,7 +437,11 @@ INSERT INTO `timeline_faculty` (`id`, `title`, `details`, `type`, `batchId`, `fy
 (15, 'Info', 'Ridah Fatima Mudassir is not supervising group proSys', 'info', 1, 1, '2020-04-02 17:29:02'),
 (16, 'Info', 'Ridah Fatima Mudassir is now supervising group proSys', 'info', 1, 1, '2020-04-02 17:30:10'),
 (17, 'Info', 'Ridah Fatima Mudassir is not supervising group IU Chat Bot', 'info', 1, 1, '2020-04-04 19:27:27'),
-(18, 'Batch Upgraded', 'Spring 2019 has been upgraded to Project Defense', 'info', 3, 2, '2020-04-05 10:41:23');
+(18, 'Batch Upgraded', 'Spring 2019 has been upgraded to Project Defense', 'info', 3, 2, '2020-04-05 10:41:23'),
+(19, 'Info', 'Noman Islam is now supervising group IU Chat Bot', 'info', 1, 1, '2020-04-09 19:54:15'),
+(20, 'Info', 'Noman Islam is now supervising group yycvg', 'info', 1, 1, '2020-04-09 19:54:17'),
+(21, 'Info', 'Ridah Fatima Mudassir is not supervising group smart robot', 'info', 1, 1, '2020-04-11 21:39:23'),
+(22, 'Info', 'Ridah Fatima Mudassir is now supervising group smart robot', 'info', 1, 1, '2020-04-11 21:40:57');
 
 -- --------------------------------------------------------
 
@@ -471,7 +481,11 @@ INSERT INTO `timeline_student` (`id`, `title`, `details`, `type`, `taskId`, `bat
 (22, 'idea selection', '<p>select the task</p>', 'task', 3, 1, 1, '2020-04-05 09:33:59'),
 (24, 'Batch Upgraded', '                                                    Spring 2019 has been upgraded to Project Defense                                                ', 'info', NULL, 3, 2, '2020-04-05 19:21:58'),
 (25, 'ERD ', '<p>nion9iojjio</p>', 'task', 4, 1, 1, '2020-04-05 20:34:14'),
-(26, 'idea selection 2', '<p>90jjppjijiojoj</p>', 'task', 5, 1, 1, '2020-04-05 20:36:55');
+(26, 'idea selection 2', '<p>90jjppjijiojoj</p>', 'task', 5, 1, 1, '2020-04-05 20:36:55'),
+(27, 'Info', 'Noman Islam is now supervising group IU Chat Bot', 'info', NULL, 1, 1, '2020-04-09 19:54:15'),
+(28, 'Info', 'Noman Islam is now supervising group yycvg', 'info', NULL, 1, 1, '2020-04-09 19:54:17'),
+(29, 'Info', 'Ridah Fatima Mudassir is not supervising group smart robot', 'info', NULL, 1, 1, '2020-04-11 21:39:23'),
+(30, 'Info', 'Ridah Fatima Mudassir is now supervising group smart robot', 'info', NULL, 1, 1, '2020-04-11 21:40:57');
 
 -- --------------------------------------------------------
 
@@ -493,17 +507,6 @@ CREATE TABLE `weekly_report` (
   `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `weekly_report`
---
-
-INSERT INTO `weekly_report` (`weekly_r_Id`, `supervisor_Id`, `group_Id`, `planned_work`, `proposed_work`, `week_No`, `achievements`, `score`, `comments`, `attendance`, `createdDtm`) VALUES
-(1, 2, 20, ' <p>vuhvuvuyh</p> ', '<p>iooiojj</p>', 2, ' <p>no</p>', 3, '<p>kmkmko</p>', '<p>walid,</p><p>sami</p>', '2020-04-04 19:22:30'),
-(2, 2, 20, ' <p>ojopijiopj</p> ', '<p>pjpjop</p>', 5, ' <p>kl;mpjkp</p>', 3, '<p>pjpjop</p>', '<p>0jpjpjop</p>', '2020-04-04 19:23:53'),
-(3, 2, 20, ' <p>pjpjop</p> ', '<p>gnfgnfgnfgn</p>', 6, ' <p>gnffgnfgnfg</p>', 3, '<p>fgnfgnfgnfgnf</p>', '<p>sdhdhsdfsbdb</p>', '2020-04-05 08:01:03'),
-(4, 2, 21, ' <p>user panel</p> ', '<p>admin panel</p>', 1, ' <p>no</p>', 3, '<p>yes</p>', '<p>anyone</p>', '2020-04-05 08:10:53'),
-(5, 2, 21, ' <p>admin panel</p> ', '<p>datbase</p>', 2, ' <p>no&nbsp;&nbsp;&nbsp;&nbsp;</p>', 3, '<p>yes</p>', '<p>anyone</p>', '2020-04-05 08:11:38');
-
 -- --------------------------------------------------------
 
 --
@@ -524,7 +527,7 @@ CREATE TABLE `work_load` (
 INSERT INTO `work_load` (`loadId`, `facultyId`, `totalLoad`, `currentLoad`) VALUES
 (1, 1, 4, 0),
 (2, 2, 4, 2),
-(3, 3, 4, 0),
+(3, 3, 4, 2),
 (4, 4, 4, 0),
 (5, 5, 3, 0),
 (6, 6, 4, 0);
@@ -543,6 +546,7 @@ ALTER TABLE `batch`
 -- Indexes for table `batch_settings`
 --
 ALTER TABLE `batch_settings`
+  ADD PRIMARY KEY (`settingId`),
   ADD KEY `batchId` (`batchId`);
 
 --
@@ -698,6 +702,12 @@ ALTER TABLE `batch`
   MODIFY `batchId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `batch_settings`
+--
+ALTER TABLE `batch_settings`
+  MODIFY `settingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `batch_tasks`
 --
 ALTER TABLE `batch_tasks`
@@ -725,19 +735,19 @@ ALTER TABLE `faculty`
 -- AUTO_INCREMENT for table `faculty_student_group`
 --
 ALTER TABLE `faculty_student_group`
-  MODIFY `facultyStudentId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `facultyStudentId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `faculty_student_request`
 --
 ALTER TABLE `faculty_student_request`
-  MODIFY `requestId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `requestId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `group_requests`
@@ -755,7 +765,7 @@ ALTER TABLE `group_uploads`
 -- AUTO_INCREMENT for table `meeting_requests`
 --
 ALTER TABLE `meeting_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `project_repository`
@@ -779,7 +789,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `student_group`
 --
 ALTER TABLE `student_group`
-  MODIFY `groupId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `groupId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `student_group_request`
@@ -791,19 +801,19 @@ ALTER TABLE `student_group_request`
 -- AUTO_INCREMENT for table `timeline_faculty`
 --
 ALTER TABLE `timeline_faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `timeline_student`
 --
 ALTER TABLE `timeline_student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `weekly_report`
 --
 ALTER TABLE `weekly_report`
-  MODIFY `weekly_r_Id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `weekly_r_Id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `work_load`

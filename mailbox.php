@@ -332,6 +332,4 @@ if(!isset($_SESSION['user_id'])){
   <!-- jQuery -->
   <?php include('include/jsFile.php'); ?>
   <!-- .jQuery -->
-
-  </body>
-</html>
+</body>

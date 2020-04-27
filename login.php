@@ -6,21 +6,20 @@ include('db/db_connect.php');
 
 if(isset($_SESSION['user_id'])){
   header("location: login.php");
-  }
+}
 
 if(isset($_POST['submit'])){
+  $login_id = $_POST['txt_id'];
+  $login_password = $_POST['txt_pass'];
 
-    $login_id = $_POST['txt_id'];
-    $login_password = $_POST['txt_pass'];
+  $login_query_std = "select * from student where studentRid = '".$login_id."' AND studentPassword = '".$login_password."' ";
+  $login_query_fac = "select * from faculty where facultyRid = '".$login_id."' AND facultyPassword = '".$login_password."' ";
 
-    $login_query_std = "select * from student where studentRid = '".$login_id."' AND studentPassword = '".$login_password."' ";
-    $login_query_fac = "select * from faculty where facultyRid = '".$login_id."' AND facultyPassword = '".$login_password."' ";
+  $run_std = mysqli_query($link,$login_query_std);
+  $run_fac = mysqli_query($link,$login_query_fac);
 
-    $run_std = mysqli_query($link,$login_query_std);
-    $run_fac = mysqli_query($link,$login_query_fac);
-
-    $row  = mysqli_fetch_array($run_std);
-    $row1  = mysqli_fetch_array($run_fac);
+  $row  = mysqli_fetch_array($run_std);
+  $row1  = mysqli_fetch_array($run_fac);
     if(mysqli_num_rows($run_std)>0){
         $_SESSION['user_id'] = $login_id;
         $_SESSION['type'] = "Student";
@@ -45,10 +44,8 @@ if(isset($_POST['submit'])){
         $_SESSION["designation"]=$row1["designation"];
         $_SESSION["image"]=$row1["facultyImage"];
         $_SESSION["isCord"]=$row1["isCoordinator"];
-        
-
         echo "<script>window.open('index.php','_self')</script>";
-    }
+      }
   else{
      echo "<script>alert('ID or Password is invalid!')</script>";  
       }
@@ -66,21 +63,20 @@ if(isset($_POST['submit'])){
   <div class="col-md-2"></div>
   <div class="col-md-8">
    <?php
-            if (isset($_GET['status'])){
-              if ($_GET['status'] == 't'){ ?>
-                    <div style="text-align:center;" class="alert alert-success" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign"></span>
-                        Kindly login again thank you.
-                        <button type="button" class="close" data-dismiss="alert">x</button>
-                    </div>
-                     <?php
-                }
-
-            }
-            ?>
-            </div>
-            <div class="col-md-2"></div>
- </div>
+   if (isset($_GET['status'])){
+    if ($_GET['status'] == 't'){ ?>
+      <div style="text-align:center;" class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+        Kindly login again thank you.
+        <button type="button" class="close" data-dismiss="alert">x</button>
+      </div>
+      <?php
+    }
+  }
+  ?>
+</div>
+<div class="col-md-2"></div>
+</div>
 <div class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
@@ -90,7 +86,6 @@ if(isset($_POST['submit'])){
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-
       <form action="login.php" method="post">
         <div class="input-group mb-3">
           <input type="text" name="txt_id" class="form-control" placeholder="ID" required>
@@ -138,4 +133,3 @@ if(isset($_POST['submit'])){
 <!-- jQuery -->
 <?php include('include/jsFile.php'); ?>
 </body>
-</html>
