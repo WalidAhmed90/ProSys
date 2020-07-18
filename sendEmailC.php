@@ -8,7 +8,7 @@ session_start();
 $username = $_SESSION["usrnm"];
 //
 include("libraries/sendgrid-php/sendgrid-php.php");
-$sendgrid = new SendGrid('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');
+$sendgrid = new SendGrid('SendGridApi');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Setting up SendGrid
         $email = new SendGrid\Email();
 
-        $email->setFrom('walidkhan345@gmail.com');
+        $email->setFrom('$fromEmail');
         $email->setFromName($username);
         $email->setSubject($subject);
         foreach (explode(",", $recipient) as $address) {
