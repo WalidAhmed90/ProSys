@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2020 at 06:44 PM
+-- Generation Time: Jun 25, 2020 at 09:55 PM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.1.12
 
@@ -43,7 +43,7 @@ CREATE TABLE `batch` (
 
 INSERT INTO `batch` (`batchId`, `batchName`, `startingDate`, `isActive`, `fypPart`, `createdDtm`) VALUES
 (1, 'Spring 2020', '2020-01-01', 1, 1, '2020-02-12 13:29:08'),
-(2, 'Fall 2020', '2020-03-30', 0, 1, '2020-03-29 04:02:35'),
+(2, 'Fall 2020', '2020-03-30', 1, 1, '2020-03-29 04:02:35'),
 (3, 'Spring 2019', '2020-04-05', 0, 1, '2020-04-05 10:40:36');
 
 -- --------------------------------------------------------
@@ -65,7 +65,7 @@ CREATE TABLE `batch_settings` (
 
 INSERT INTO `batch_settings` (`settingId`, `batchId`, `fyp1_grading`, `fyp2_grading`) VALUES
 (1, 2, 0, 0),
-(2, 1, 1, 0),
+(2, 1, 0, 0),
 (3, 3, 0, 0);
 
 -- --------------------------------------------------------
@@ -116,24 +116,8 @@ CREATE TABLE `batch_templates` (
 
 INSERT INTO `batch_templates` (`templateId`, `batchId`, `templateName`, `templateLocation`, `uploadedDtm`) VALUES
 (4, 1, 'file', 'file.jpg', '2020-03-31 03:45:16'),
-(5, 1, 'project file', 'project file.jpg', '2020-03-31 03:46:19');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `external_examiner`
---
-
-CREATE TABLE `external_examiner` (
-  `examinerId` int(255) NOT NULL,
-  `examinerName` varchar(100) NOT NULL,
-  `examinerEmail` varchar(255) NOT NULL,
-  `examinerPhone` varchar(50) NOT NULL,
-  `examinerPassword` varchar(255) NOT NULL,
-  `company` varchar(255) NOT NULL,
-  `designation` varchar(255) NOT NULL,
-  `isActive` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='examinerGroupInfo';
+(5, 1, 'project file', 'project file.jpg', '2020-03-31 03:46:19'),
+(6, 1, 'resume template', 'resume template.docx', '2020-06-12 02:01:41');
 
 -- --------------------------------------------------------
 
@@ -160,12 +144,12 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`facultyId`, `facultyRid`, `facultyName`, `facultyPhoneNo`, `facultyEmail`, `designation`, `facultyImage`, `facultyPassword`, `isCoordinator`, `createdDtm`, `isActive`) VALUES
-(1, '00-11-123', 'Coordinator', '03456787980', 'coordinator@gmail.com', 'Coordinator', NULL, '456', 1, '2020-02-02 18:29:56', 1),
-(2, '00-11-124', 'Ridah Fatima Mudassir', '03167896542', 'ridah@gmail.com', 'Supervisor', NULL, '456', 0, '2020-02-02 18:31:47', 1),
-(3, '00-11-125', 'Noman Islam', '', 'nomanislam@gmail.com', 'Supervisor', NULL, 'iuk123', 0, '2020-02-28 02:00:55', 1),
-(4, '00-11-126', 'S.jamal haider zaidi', '', 'jamalhaider@gmail.com', 'Supervisor', NULL, 'iuk123', 0, '2020-02-28 02:04:04', 1),
-(5, '00-11-127', 'Walid ahmed', '', '', 'Supervisor', NULL, 'iuk123', 0, '2020-02-28 02:27:03', 1),
-(6, '00-11-128', 'alizain Aziz', '', '', 'Coordinator', NULL, 'iuk123', 1, '2020-02-28 02:27:52', 1);
+(1, '00-11-123', 'Coordinator', '03456787980', 'coordinator@gmail.com', 'Coordinator', NULL, '$2y$10$5YvSFZ6Zfg77lSBT458stu1YwUbYqd7fP6RTsCNWV7So5G9WYnm3G', 1, '2020-02-02 18:29:56', 1),
+(2, '00-11-124', 'Ridah Fatima Mudassir', '03167896542', 'ridah@gmail.com', 'Supervisor', NULL, '$2y$10$sgawcL/zxlqO7LsEutF7xelVxcto7Hxo5XLQMSpy4wMN4QTlHkHOq', 0, '2020-02-02 18:31:47', 1),
+(3, '00-11-125', 'Noman Islam', '', 'nomanislam@gmail.com', 'Supervisor', NULL, '$2y$10$ap8ILiLgNbdwKvDjnhc6n.jZI7WyBMrYxof1omX42Rjwl514PWR2q', 0, '2020-02-28 02:00:55', 1),
+(4, '00-11-126', 'S.jamal haider zaidi', '', 'jamalhaider@gmail.com', 'Supervisor', NULL, '$2y$10$slS8sJhHW.SAvgb1O/.8veEI.oq820eu.sNX6dazdFSgQ2L1uTsy2', 0, '2020-02-28 02:04:04', 1),
+(5, '00-11-127', 'Walid ahmed', '', '', 'Supervisor', NULL, '$2y$10$gBJeKhJ80LkRa4ej2wRWa..HLu.uV1lj4t7/JJI6Ua1ch/WAGybWi', 0, '2020-02-28 02:27:03', 1),
+(6, '00-11-128', 'alizain Aziz', '', '', 'Coordinator', NULL, '$2y$10$DdcDGl5u0I1SW6gLGDfU0.xc0/6io7BCGMGdnjk2foA9/wXjhWt9O', 1, '2020-02-28 02:27:52', 1);
 
 -- --------------------------------------------------------
 
@@ -188,7 +172,8 @@ INSERT INTO `faculty_student_group` (`facultyStudentId`, `groupId`, `facultyId`,
 (12, 20, 2, 0),
 (13, 16, 3, 0),
 (14, 22, 3, 0),
-(15, 21, 2, 0);
+(15, 21, 2, 0),
+(16, 24, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -214,9 +199,15 @@ CREATE TABLE `grades` (
   `studentId` int(11) DEFAULT NULL,
   `groupId` int(11) DEFAULT NULL,
   `fypPart` int(11) DEFAULT NULL,
+  `contribution` int(255) NOT NULL,
+  `anstoques` int(255) NOT NULL,
+  `completion` int(255) NOT NULL,
+  `presentation` int(255) NOT NULL,
+  `novelty` int(255) NOT NULL,
   `comments` text,
   `grade` int(50) DEFAULT NULL,
   `gradedBy` int(11) DEFAULT NULL COMMENT 'User id of user',
+  `iscord` int(255) NOT NULL,
   `gradeDtm` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
@@ -224,10 +215,28 @@ CREATE TABLE `grades` (
 -- Dumping data for table `grades`
 --
 
-INSERT INTO `grades` (`id`, `studentId`, `groupId`, `fypPart`, `comments`, `grade`, `gradedBy`, `gradeDtm`) VALUES
-(1, 10, 20, 1, 'no', 10, 4, '2020-04-09 20:48:50'),
-(2, 14, 20, 1, 'no', 10, 4, '2020-04-09 20:48:50'),
-(3, 20, 20, 1, 'yes', 9, 4, '2020-04-09 20:48:50');
+INSERT INTO `grades` (`id`, `studentId`, `groupId`, `fypPart`, `contribution`, `anstoques`, `completion`, `presentation`, `novelty`, `comments`, `grade`, `gradedBy`, `iscord`, `gradeDtm`) VALUES
+(1, 12, 16, 1, 15, 8, 17, 0, 0, 'no', 40, 2, 0, '2020-05-12 14:14:16'),
+(2, 13, 16, 1, 17, 6, 19, 0, 0, 'no', 42, 2, 0, '2020-05-12 14:14:16'),
+(3, 10, 20, 1, 16, 8, 17, 0, 0, 'no', 41, 2, 0, '2020-05-12 14:14:40'),
+(4, 14, 20, 1, 17, 6, 18, 0, 0, 'no', 41, 2, 0, '2020-05-12 14:14:40'),
+(5, 20, 20, 1, 18, 9, 19, 0, 0, 'no', 46, 2, 0, '2020-05-12 14:14:40'),
+(6, 10, 20, 1, 16, 4, 17, 0, 0, 'no', 37, 3, 0, '2020-05-12 14:15:34'),
+(7, 14, 20, 1, 16, 5, 18, 0, 0, 'no', 39, 3, 0, '2020-05-12 14:15:34'),
+(8, 20, 20, 1, 18, 7, 19, 0, 0, 'no', 44, 3, 0, '2020-05-12 14:15:34'),
+(9, 22, 22, 1, 16, 9, 19, 0, 0, 'no', 44, 3, 0, '2020-05-12 14:15:44'),
+(10, 12, 16, 1, 16, 8, 18, 0, 0, 'no', 42, 1, 1, '2020-05-12 14:19:05'),
+(11, 13, 16, 1, 17, 8, 19, 0, 0, 'no', 44, 1, 1, '2020-05-12 14:19:05'),
+(12, 12, 16, 1, 17, 7, 19, 0, 0, 'no', 43, 4, 0, '2020-05-12 15:32:12'),
+(13, 13, 16, 1, 18, 9, 18, 0, 0, 'no', 45, 4, 0, '2020-05-12 15:32:12'),
+(14, 10, 20, 1, 17, 9, 18, 0, 0, 'no', 44, 1, 1, '2020-05-13 16:58:24'),
+(15, 14, 20, 1, 15, 5, 18, 0, 0, 'no', 38, 1, 1, '2020-05-13 16:58:24'),
+(16, 20, 20, 1, 17, 8, 19, 0, 0, 'no', 44, 1, 1, '2020-05-13 16:58:24'),
+(17, 19, 21, 1, 16, 7, 16, 0, 0, 'good', 39, 2, 0, '2020-05-13 16:59:17'),
+(18, 26, 24, 2, 17, 0, 0, 18, 8, 'no', 43, 2, 0, '2020-06-06 23:36:27'),
+(19, 27, 24, 2, 18, 0, 0, 16, 7, 'no', 41, 2, 0, '2020-06-06 23:36:28'),
+(20, 26, 24, 2, 16, 0, 0, 17, 8, 'no', 41, 1, 1, '2020-06-06 23:37:34'),
+(21, 27, 24, 2, 18, 0, 0, 19, 9, 'no', 46, 1, 1, '2020-06-06 23:37:34');
 
 -- --------------------------------------------------------
 
@@ -283,6 +292,26 @@ CREATE TABLE `meeting_requests` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `notificationId` int(11) NOT NULL,
+  `studentId` int(255) DEFAULT NULL,
+  `batchId` int(255) DEFAULT NULL,
+  `taskId` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`notificationId`, `studentId`, `batchId`, `taskId`) VALUES
+(1, 20, 1, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `project_repository`
 --
 
@@ -290,6 +319,13 @@ CREATE TABLE `project_repository` (
   `id` int(11) NOT NULL,
   `batchId` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `project_repository`
+--
+
+INSERT INTO `project_repository` (`id`, `batchId`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -312,11 +348,12 @@ CREATE TABLE `share_idea` (
 --
 
 INSERT INTO `share_idea` (`shareId`, `title`, `details`, `facultyName`, `facultyId`, `fypPart`, `createdDtm`) VALUES
-(2, 'fyp management System', 'final year project management system', 'Ridah Fatima Mudassir', 2, 0, '2020-03-31 01:32:34'),
-(3, 'Iu chat bot ', 'iqra university onilne chat bot.', 'Ridah Fatima Mudassir', 2, 0, '2020-03-31 02:06:12'),
-(4, 'android app', 'for the recent situation .', 'Ridah Fatima Mudassir', 2, 0, '2020-03-31 02:09:47'),
-(8, 'IU Society Elections ', '<p><a href=\"http://www.google.com\" target=\"_blank\">www.google.com</a><a href=\"http://www.google.com\" target=\"_blank\"></a></p><p>search from google .</p>', 'Coordinator', 1, 0, '2020-03-31 02:48:10'),
-(9, 'android app react', '<p>vuuvuvuivuyvuyvuyvuy</p>', 'Ridah Fatima Mudassir', 2, 0, '2020-04-04 19:25:11');
+(2, 'fyp management System', 'final year project management system', 'Ridah Fatima Mudassir', 2, 1, '2020-03-31 01:32:34'),
+(3, 'Iu chat bot ', 'iqra university onilne chat bot.', 'Ridah Fatima Mudassir', 2, 1, '2020-03-31 02:06:12'),
+(4, 'android app', 'for the recent situation .', 'Ridah Fatima Mudassir', 2, 1, '2020-03-31 02:09:47'),
+(8, 'IU Society Elections ', '<p><a href=\"http://www.google.com\" target=\"_blank\">www.google.com</a><a href=\"http://www.google.com\" target=\"_blank\"></a></p><p>search from google .</p>', 'Coordinator', 1, 1, '2020-03-31 02:48:10'),
+(9, 'android app react', '<p>vuuvuvuivuyvuyvuyvuy</p>', 'Ridah Fatima Mudassir', 2, 1, '2020-04-04 19:25:11'),
+(11, 'Iu chat bot ', 'addddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', 'Ridah Fatima Mudassir', 2, 1, '2020-06-07 00:21:47');
 
 -- --------------------------------------------------------
 
@@ -337,6 +374,7 @@ CREATE TABLE `student` (
   `isLeader` int(1) DEFAULT NULL,
   `batchId` int(4) DEFAULT NULL,
   `isActive` tinyint(1) NOT NULL DEFAULT '1',
+  `isVerify` int(11) NOT NULL,
   `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='FYP Student Records';
 
@@ -344,21 +382,26 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`studentId`, `studentName`, `studentRid`, `studentEmail`, `studentPhoneNo`, `studentGender`, `studentPassword`, `studentImage`, `groupId`, `isLeader`, `batchId`, `isActive`, `createdDtm`) VALUES
-(10, 'Muhammad sami ullah qureshi', '12520', '', '', '', 'iuk123', NULL, 20, NULL, 1, 1, '2020-02-28 02:39:19'),
-(12, 'Khalid Ahmed', '12423', 'khalidahmed@gmail.com', '03452286280', 'male', 'iuk123', NULL, 16, 1, 1, 1, '2020-02-28 03:12:14'),
-(13, 'sohaib bilal zafar', '12421', 'sohaibbilal@gmail.com', '0312456784', '', '123', NULL, 16, NULL, 1, 1, '2020-02-28 03:57:43'),
-(14, 'alizain', '12425', '', '', '', 'iuk123', NULL, 20, NULL, 1, 1, '2020-02-28 05:08:35'),
-(15, 'waleed khan', '12426', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-01 05:33:41'),
-(16, 'khuzaima nadeem', '12427', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-01 05:33:53'),
-(17, 'mahad ahmed', '12428', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-01 05:34:04'),
-(18, 'azeem khan', '12429', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-01 05:34:26'),
-(19, 'mohi khan', '12430', 'mohikhan345@gmail.com', '09764336738', 'male', '123', NULL, 21, 1, 1, 1, '2020-03-01 05:34:38'),
-(20, 'walid ahmed', '12422', 'walidkhan345@gmail.com', '03122990486', 'male', '123', '5e8892f109cfb8.43621097.jpg', 20, 1, 1, 1, '2020-03-01 05:38:46'),
-(21, 'Mubashir Hussain', '12431', '', '', '', 'iuk123', NULL, 23, 1, 1, 1, '2020-03-27 20:52:05'),
-(22, 'haroon rasheed', '12432', '', '', '', 'iuk123', NULL, 22, 1, 1, 1, '2020-03-27 20:52:28'),
-(23, 'Ather Anwar', '12433', '', '', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-27 20:52:49'),
-(24, 'talha khan', '12434', 'talhakhan@gmail.com', '1134534546464', '', 'iuk123', NULL, NULL, NULL, 1, 1, '2020-03-27 20:53:02');
+INSERT INTO `student` (`studentId`, `studentName`, `studentRid`, `studentEmail`, `studentPhoneNo`, `studentGender`, `studentPassword`, `studentImage`, `groupId`, `isLeader`, `batchId`, `isActive`, `isVerify`, `createdDtm`) VALUES
+(10, 'Muhammad sami ullah qureshi', '12520', '', '', '', '$2y$10$k3EY.mMAWTPCjZehNRWvhONagYx.VRVEFZROuyEXOppWpwNGzhxEe', NULL, 20, NULL, 1, 1, 0, '2020-02-28 02:39:19'),
+(12, 'Khalid Ahmed', '12423', 'khalidahmed@gmail.com', '03452286280', 'male', '$2y$10$bHQK19mQGWACLDANaKZvZeRRsZQH3TYGdw7r4AIU5/mEGL65VkRb.', '5ee29b4fee3163.87984288.jpg', 16, 1, 1, 1, 0, '2020-02-28 03:12:14'),
+(13, 'sohaib bilal zafar', '12421', 'sohaibbilal@gmail.com', '0312456784', '', '$2y$10$zqYOGFkPh1xTUAYVl/6CbusnTf3/SCDZer6f6cGkTeAdvVEmxmr3C', NULL, 16, NULL, 1, 1, 0, '2020-02-28 03:57:43'),
+(14, 'alizain', '12425', '', '', '', '$2y$10$iKuBsWHciG3FnMYSPP8DA.ZsKzZkufpXBJbHg4dx2Ze1tmtnh7JxS', NULL, 20, NULL, 1, 1, 0, '2020-02-28 05:08:35'),
+(15, 'waleed khan', '12426', '', '', '', '$2y$10$UpimJRpl7D5m4.ZLsrZV9OaBBUqWNhqKXjw8F9VAqXmhIe4Adn9Ma', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:33:41'),
+(16, 'khuzaima nadeem', '12427', '', '', '', '$2y$10$3VSEArAkCRDSnAVKnY2awewYkpgV2V9nbCtvH1dLyOgkrCMSK3FNi', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:33:53'),
+(17, 'mahad ahmed', '12428', '', '', '', '$2y$10$I8lK8oEz86aJDm11mWR9cOMhc1OfLVLk67meGei5XGqf8QT.NKwhm', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:34:04'),
+(18, 'azeem khan', '12429', '', '', '', '$2y$10$R0ruEY8KlwWmDj5d6XwJI.CnVPNNpTr66Wbhi/GdvZPlfdznlNQ4m', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:34:26'),
+(19, 'mohi khan', '12430', 'mohikhan345@gmail.com', '09764336738', 'male', '$2y$10$1fZhE16E7jRC/X6j91pQQOC4F7gQQxq5yG0g7QwhC9wPotm9SlDhS', NULL, 21, 1, 1, 1, 0, '2020-03-01 05:34:38'),
+(20, 'walid ahmed', '12422', 'walidkhan@gmail.com', '03122990486', 'male', '$2y$10$B8gHE5XXl31c4rsUsW0y9OFTUuUUD5nj8xpPOSYrE/UiA1k4lSyly', '5ee29b16165f78.61262012.jpg', 20, 1, 1, 1, 0, '2020-03-01 05:38:46'),
+(21, 'Mubashir Hussain', '12431', '', '', '', '$2y$10$J7GVZPW.1WNaIIebqqVCyefk68KygwPkuy7xRLtP8PycErqhra3aa', NULL, 23, 1, 1, 1, 0, '2020-03-27 20:52:05'),
+(22, 'haroon rasheed', '12432', '', '', '', '$2y$10$Ni7Ol2VRq/FuTwCebnP6cuYg6nINp/lGiIZhMQFr52K9fQ0/X545S', NULL, 22, 1, 1, 1, 0, '2020-03-27 20:52:28'),
+(23, 'Ather Anwar', '12433', '', '', '', '$2y$10$9clzbnVUTOO0CDHSvSqX4u4j6hdSwcWhQWy5w6jUE8kqkCRm2Y47e', NULL, NULL, NULL, 1, 1, 0, '2020-03-27 20:52:49'),
+(24, 'talha khan', '12434', 'talhakhan@gmail.com', '1134534546464', '', '$2y$10$p4NySgWzfhId6q32hBV/Ae9zSFwOgnid7flksk843jwgeUP4SqXYq', NULL, NULL, NULL, 1, 1, 0, '2020-03-27 20:53:02'),
+(25, 'areeb ahmed', '12435', 'areebahmed@gmail.com', '33223244232', 'male', '$2y$10$dm8fOdGbyKfV9edC.xcycu2Oc98Uu/whm7I/Dhl5NHzZPF1h3kuoW', NULL, NULL, NULL, 1, 1, 0, '2020-05-02 02:06:48'),
+(26, 'sajeer', '12345', '', '', '', '$2y$10$AQYnRVBLsM9PWFmXXbqC1.KIMIZqu/6yonOip582jZf/aJ2YpotoK', NULL, 24, 1, 2, 1, 0, '2020-06-06 22:50:29'),
+(27, 'walid', '12344', '', '', '', '$2y$10$2Jm7DAphJCnPGirSwE2XsOLaKSA.M9oGIlauj7UoxmGALWsPuSZMW', NULL, 24, NULL, 2, 1, 0, '2020-06-06 22:50:38'),
+(28, 'areeb', '12346', '', '', '', '$2y$10$j.edPkES9UKMU8YJTmneH.l/CzN3xdL6h0MqhMGgssO0u3A53VaRS', NULL, 24, NULL, 2, 1, 0, '2020-06-06 22:50:47'),
+(29, 'Abdul sami', '12347', '', '', '', '$2y$10$O/ElXG5hgFExPubd1NA4F.6kgBDLM/TfWZhN8dOp3wbdNzr7u2b9O', NULL, 25, 1, 2, 1, 0, '2020-06-06 22:51:40');
 
 -- --------------------------------------------------------
 
@@ -388,7 +431,9 @@ INSERT INTO `student_group` (`groupId`, `projectName`, `categories`, `descriptio
 (20, 'proSys', 'web portal', 'jsvps;lv;s', 1, 1, 3, 3, 20, '2020-03-01 06:00:50'),
 (21, 'smart robot', 'Robotics', 'my first smart robot', 1, 1, 3, 1, 19, '2020-03-09 01:10:51'),
 (22, 'yycvg', '3D/4D Printing', 'drdyhh', 1, 1, 3, 1, 22, '2020-03-27 21:19:46'),
-(23, 'Smart Card', 'Augmented Reality/Virtual Reality', 'based on augmented reality', 1, 1, 3, 1, 21, '2020-04-09 20:24:34');
+(23, 'Smart Card', 'Augmented Reality/Virtual Reality', 'based on augmented reality', 1, 1, 3, 1, 21, '2020-04-09 20:24:34'),
+(24, 'chatterbot', 'Artificial Intelligence', 'Ai project', 2, 1, 3, 3, 26, '2020-06-06 23:02:07'),
+(25, 'Work 4 Worker', 'werbpotal', 'Web portal for workers to get job by home ', 2, 1, 3, 1, 29, '2020-06-25 23:37:12');
 
 -- --------------------------------------------------------
 
@@ -441,7 +486,13 @@ INSERT INTO `timeline_faculty` (`id`, `title`, `details`, `type`, `batchId`, `fy
 (19, 'Info', 'Noman Islam is now supervising group IU Chat Bot', 'info', 1, 1, '2020-04-09 19:54:15'),
 (20, 'Info', 'Noman Islam is now supervising group yycvg', 'info', 1, 1, '2020-04-09 19:54:17'),
 (21, 'Info', 'Ridah Fatima Mudassir is not supervising group smart robot', 'info', 1, 1, '2020-04-11 21:39:23'),
-(22, 'Info', 'Ridah Fatima Mudassir is now supervising group smart robot', 'info', 1, 1, '2020-04-11 21:40:57');
+(22, 'Info', 'Ridah Fatima Mudassir is now supervising group smart robot', 'info', 1, 1, '2020-04-11 21:40:57'),
+(23, 'Batch Upgraded', 'Spring 2020 has been upgraded to Project Defense', 'info', 1, 2, '2020-04-14 15:45:52'),
+(24, 'Batch Upgraded', 'Spring 2020 has been upgraded to Project Defense', 'info', 1, 2, '2020-04-14 15:54:52'),
+(25, 'Batch Upgraded', 'Spring 2020 has been upgraded to Project Defense', 'info', 1, 2, '2020-04-14 15:58:25'),
+(26, 'Batch Upgraded', 'Fall 2020 has been upgraded to Project Defense', 'info', 2, 2, '2020-06-06 22:42:05'),
+(27, 'Batch Upgraded', 'Fall 2020 has been upgraded to Project Defense', 'info', 2, 2, '2020-06-06 23:07:36'),
+(28, 'Info', 'Ridah Fatima Mudassir is now supervising group chatterbot', 'info', 2, 2, '2020-06-06 23:10:06');
 
 -- --------------------------------------------------------
 
@@ -485,7 +536,13 @@ INSERT INTO `timeline_student` (`id`, `title`, `details`, `type`, `taskId`, `bat
 (27, 'Info', 'Noman Islam is now supervising group IU Chat Bot', 'info', NULL, 1, 1, '2020-04-09 19:54:15'),
 (28, 'Info', 'Noman Islam is now supervising group yycvg', 'info', NULL, 1, 1, '2020-04-09 19:54:17'),
 (29, 'Info', 'Ridah Fatima Mudassir is not supervising group smart robot', 'info', NULL, 1, 1, '2020-04-11 21:39:23'),
-(30, 'Info', 'Ridah Fatima Mudassir is now supervising group smart robot', 'info', NULL, 1, 1, '2020-04-11 21:40:57');
+(30, 'Info', 'Ridah Fatima Mudassir is now supervising group smart robot', 'info', NULL, 1, 1, '2020-04-11 21:40:57'),
+(31, 'Batch Upgraded', 'Spring 2020 has been upgraded to Project Defense', 'info', NULL, 1, 2, '2020-04-14 15:45:52'),
+(32, 'Batch Upgraded', 'Spring 2020 has been upgraded to Project Defense', 'info', NULL, 1, 2, '2020-04-14 15:54:52'),
+(33, 'Batch Upgraded', 'Spring 2020 has been upgraded to Project Defense', 'info', NULL, 1, 2, '2020-04-14 15:58:25'),
+(34, 'Batch Upgraded', 'Fall 2020 has been upgraded to Project Defense', 'info', NULL, 2, 2, '2020-06-06 22:42:05'),
+(35, 'Batch Upgraded', 'Fall 2020 has been upgraded to Project Defense', 'info', NULL, 2, 2, '2020-06-06 23:07:36'),
+(36, 'Info', 'Ridah Fatima Mudassir is now supervising group chatterbot', 'info', NULL, 2, 2, '2020-06-06 23:10:06');
 
 -- --------------------------------------------------------
 
@@ -507,6 +564,14 @@ CREATE TABLE `weekly_report` (
   `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `weekly_report`
+--
+
+INSERT INTO `weekly_report` (`weekly_r_Id`, `supervisor_Id`, `group_Id`, `planned_work`, `proposed_work`, `week_No`, `achievements`, `score`, `comments`, `attendance`, `createdDtm`) VALUES
+(2, 2, 20, ' faculty Panel ', 'batch setting', 2, ' yes', 3, 'good', 'all', '2020-06-07 00:15:37'),
+(3, 2, 20, ' batch setting ', 'batch task', 3, ' no', 2, 'no comments', 'Muhammad sami ullah qureshi\r\nwalid ahmed\r\n', '2020-06-07 01:22:25');
+
 -- --------------------------------------------------------
 
 --
@@ -526,7 +591,7 @@ CREATE TABLE `work_load` (
 
 INSERT INTO `work_load` (`loadId`, `facultyId`, `totalLoad`, `currentLoad`) VALUES
 (1, 1, 4, 0),
-(2, 2, 4, 2),
+(2, 2, 4, 3),
 (3, 3, 4, 2),
 (4, 4, 4, 0),
 (5, 5, 3, 0),
@@ -562,12 +627,6 @@ ALTER TABLE `batch_tasks`
 ALTER TABLE `batch_templates`
   ADD PRIMARY KEY (`templateId`),
   ADD KEY `FK_batch_templates_batch` (`batchId`);
-
---
--- Indexes for table `external_examiner`
---
-ALTER TABLE `external_examiner`
-  ADD PRIMARY KEY (`examinerId`);
 
 --
 -- Indexes for table `faculty`
@@ -623,6 +682,12 @@ ALTER TABLE `meeting_requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_meeting_logs_faculty` (`supervisor_id`),
   ADD KEY `FK_meeting_logs_faculty_student_group` (`group_id`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`notificationId`);
 
 --
 -- Indexes for table `project_repository`
@@ -717,13 +782,7 @@ ALTER TABLE `batch_tasks`
 -- AUTO_INCREMENT for table `batch_templates`
 --
 ALTER TABLE `batch_templates`
-  MODIFY `templateId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `external_examiner`
---
-ALTER TABLE `external_examiner`
-  MODIFY `examinerId` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `templateId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `faculty`
@@ -735,19 +794,19 @@ ALTER TABLE `faculty`
 -- AUTO_INCREMENT for table `faculty_student_group`
 --
 ALTER TABLE `faculty_student_group`
-  MODIFY `facultyStudentId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `facultyStudentId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `faculty_student_request`
 --
 ALTER TABLE `faculty_student_request`
-  MODIFY `requestId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `requestId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `group_requests`
@@ -765,31 +824,37 @@ ALTER TABLE `group_uploads`
 -- AUTO_INCREMENT for table `meeting_requests`
 --
 ALTER TABLE `meeting_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `notificationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `project_repository`
 --
 ALTER TABLE `project_repository`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `share_idea`
 --
 ALTER TABLE `share_idea`
-  MODIFY `shareId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `shareId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `studentId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `student_group`
 --
 ALTER TABLE `student_group`
-  MODIFY `groupId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `groupId` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `student_group_request`
@@ -801,19 +866,19 @@ ALTER TABLE `student_group_request`
 -- AUTO_INCREMENT for table `timeline_faculty`
 --
 ALTER TABLE `timeline_faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `timeline_student`
 --
 ALTER TABLE `timeline_student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `weekly_report`
 --
 ALTER TABLE `weekly_report`
-  MODIFY `weekly_r_Id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `weekly_r_Id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `work_load`

@@ -4,7 +4,7 @@ $subtitle = "Project Templates";
 include('db/db_connect.php');
 include('include/functions.php');
 session_start();
-if(!isset($_SESSION['user_id'])){
+if($_SESSION['type'] != 'Student'){
   header("location: login.php");
 }
 
@@ -16,10 +16,18 @@ if ($batchId){
 //Check if form is submitted by GET
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
+
+
+
 }
 
 //Check if form is submitted by POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+
+
+
 }
 ?>
 <head>
@@ -30,8 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <?php include('include/navbar.php'); ?>
     <!-- /.navbar -->
+
     <!-- Main Sidebar Container -->
     <?php include ('include/sidebar.php'); ?>
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -47,13 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h3 class="card-title">Batch - <?php echo $batchName;?></h3>
               </div>
               <!-- /.card-header -->
+
               <div class="card-body">
                 <table class="table table-head-fixed text-nowrap table-striped">
                   <?php
                   $sql = "SELECT * FROM batch_templates WHERE batch_templates.batchId = '$batchId' ";
                   $result = $link->query($sql);
+
                   if ($result->num_rows > 0) {
-                    // output data of each row
+                                // output data of each row
+
                     while($row = $result->fetch_assoc()) { ?>
                       <tr>
                         <h4>
@@ -61,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <a href="<?php echo 'uploads/'.$batchName.'/templates/'.$row['templateLocation'];?>">
                             <?php echo $row['templateName'];?>
                           </a>
+
                         </h4>
                       </tr>
                       <?php
@@ -69,14 +83,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h5>No templates available.</h5>
                     <?php
                   }
+
                   ?>
                 </table>
               </div>
               <!-- /.card-body -->
+
               <div class="card-footer">
+
               </div>
+
             </div>
             <!-- /.card -->
+
+
+
+
+
+
+
           </div>
           <div class="col-sm-1"></div>
         </div>
@@ -92,6 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
+
   <!-- jQuery -->
   <?php include ('include/jsFile.php'); ?>
 </body>
+</html>
