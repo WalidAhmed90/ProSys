@@ -374,15 +374,15 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`studentId`, `studentName`, `studentRid`, `studentEmail`, `studentPhoneNo`, `studentGender`, `studentPassword`, `studentImage`, `groupId`, `isLeader`, `batchId`, `isActive`, `isVerify`, `createdDtm`) VALUES
 (10, 'Muhammad sami ullah qureshi', '12520', '', '', '', '$2y$10$k3EY.mMAWTPCjZehNRWvhONagYx.VRVEFZROuyEXOppWpwNGzhxEe', NULL, 20, NULL, 1, 1, 0, '2020-02-28 02:39:19'),
-(12, 'Khalid Ahmed', '12423', 'khalidahmed@gmail.com', '03452286280', 'male', '$2y$10$bHQK19mQGWACLDANaKZvZeRRsZQH3TYGdw7r4AIU5/mEGL65VkRb.', '5ee29b4fee3163.87984288.jpg', 16, 1, 1, 1, 0, '2020-02-28 03:12:14'),
-(13, 'sohaib bilal zafar', '12421', 'sohaibbilal@gmail.com', '0312456784', '', '$2y$10$zqYOGFkPh1xTUAYVl/6CbusnTf3/SCDZer6f6cGkTeAdvVEmxmr3C', NULL, 16, NULL, 1, 1, 0, '2020-02-28 03:57:43'),
+(12, 'Khalid Ahmed', '12423', 'khalidahmed@gmail.com', '0345228', 'male', '$2y$10$bHQK19mQGWACLDANaKZvZeRRsZQH3TYGdw7r4AIU5/mEGL65VkRb.', '5ee29b4fee3163.87984288.jpg', 16, 1, 1, 1, 0, '2020-02-28 03:12:14'),
+(13, 'sohaib bilal zafar', '12421', 'sohaibbilal@gmail.com', '0312456', '', '$2y$10$zqYOGFkPh1xTUAYVl/6CbusnTf3/SCDZer6f6cGkTeAdvVEmxmr3C', NULL, 16, NULL, 1, 1, 0, '2020-02-28 03:57:43'),
 (14, 'alizain', '12425', '', '', '', '$2y$10$iKuBsWHciG3FnMYSPP8DA.ZsKzZkufpXBJbHg4dx2Ze1tmtnh7JxS', NULL, 20, NULL, 1, 1, 0, '2020-02-28 05:08:35'),
 (15, 'waleed khan', '12426', '', '', '', '$2y$10$UpimJRpl7D5m4.ZLsrZV9OaBBUqWNhqKXjw8F9VAqXmhIe4Adn9Ma', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:33:41'),
 (16, 'khuzaima nadeem', '12427', '', '', '', '$2y$10$3VSEArAkCRDSnAVKnY2awewYkpgV2V9nbCtvH1dLyOgkrCMSK3FNi', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:33:53'),
 (17, 'mahad ahmed', '12428', '', '', '', '$2y$10$I8lK8oEz86aJDm11mWR9cOMhc1OfLVLk67meGei5XGqf8QT.NKwhm', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:34:04'),
 (18, 'azeem khan', '12429', '', '', '', '$2y$10$R0ruEY8KlwWmDj5d6XwJI.CnVPNNpTr66Wbhi/GdvZPlfdznlNQ4m', NULL, NULL, NULL, 1, 1, 0, '2020-03-01 05:34:26'),
 (19, 'mohi khan', '12430', 'mohikhan345@gmail.com', '09764336738', 'male', '$2y$10$1fZhE16E7jRC/X6j91pQQOC4F7gQQxq5yG0g7QwhC9wPotm9SlDhS', NULL, 21, 1, 1, 1, 0, '2020-03-01 05:34:38'),
-(20, 'walid ahmed', '12422', 'walidkhan@gmail.com', '03122990486', 'male', '$2y$10$B8gHE5XXl31c4rsUsW0y9OFTUuUUD5nj8xpPOSYrE/UiA1k4lSyly', '5ee29b16165f78.61262012.jpg', 20, 1, 1, 1, 0, '2020-03-01 05:38:46'),
+(20, 'walid ahmed', '12422', 'walidkhan@gmail.com', '031', 'male', '$2y$10$B8gHE5XXl31c4rsUsW0y9OFTUuUUD5nj8xpPOSYrE/UiA1k4lSyly', '5ee29b16165f78.61262012.jpg', 20, 1, 1, 1, 0, '2020-03-01 05:38:46'),
 (21, 'Mubashir Hussain', '12431', '', '', '', '$2y$10$J7GVZPW.1WNaIIebqqVCyefk68KygwPkuy7xRLtP8PycErqhra3aa', NULL, 23, 1, 1, 1, 0, '2020-03-27 20:52:05'),
 (22, 'haroon rasheed', '12432', '', '', '', '$2y$10$Ni7Ol2VRq/FuTwCebnP6cuYg6nINp/lGiIZhMQFr52K9fQ0/X545S', NULL, 22, 1, 1, 1, 0, '2020-03-27 20:52:28'),
 (23, 'Ather Anwar', '12433', '', '', '', '$2y$10$9clzbnVUTOO0CDHSvSqX4u4j6hdSwcWhQWy5w6jUE8kqkCRm2Y47e', NULL, NULL, NULL, 1, 1, 0, '2020-03-27 20:52:49'),
